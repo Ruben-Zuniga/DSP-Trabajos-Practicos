@@ -1,0 +1,14 @@
+/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_gpio.h:345:20:GPIO_PinWrite	24	static
+/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_lpadc.h:1128:20:LPADC_DoSoftwareTrigger	16	static
+/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_ctimer.h:517:20:CTIMER_StartTimer	16	static
+/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_ctimer.h:527:20:CTIMER_StopTimer	16	static
+/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_ctimer.h:541:20:CTIMER_Reset	16	static
+/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_dac.h:393:20:DAC_SetData	16	static
+../source/MCXN947_TP1.c:68:13:UpdateLedColor	16	static
+../source/MCXN947_TP1.c:80:13:LED_SetColor	16	static
+../source/MCXN947_TP1.c:88:6:ctimer_match0_callback	24	static
+../source/MCXN947_TP1.c:109:6:ctimer1_match0_callback	16	static
+../source/MCXN947_TP1.c:123:6:GPIO00_IRQHandler	16	static
+../source/MCXN947_TP1.c:141:6:GPIO01_IRQHandler	16	static
+../source/MCXN947_TP1.c:164:13:GenerateSineTable	24	static
+../source/MCXN947_TP1.c:177:5:main	8	static

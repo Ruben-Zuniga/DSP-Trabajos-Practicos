@@ -1,0 +1,14 @@
+AzureRTOS_TAD_logs/
+frdmmcxn947_ctimer_match_interrupt_example_cm33_core0/
+frdmmcxn947_dac_1_basic_cm33_core0/
+frdmmcxn947_dac_sinewave_cm33_core0/
+frdmmcxn947_dac_sinewave_cm33_core0_UART/
+frdmmcxn947_lpadc_polling_cm33_core0/
+frdmmcxn947_lpflexcomm_interrupt_transfer_cm33_core0/
+frdmmcxn947_powerquad_fir_fast_cm33_core0/
+FreeRTOS_TAD_logs/
+MCXN947_TP1_2/
+ZephyrRTOS_TAD_logs/
+.mcuxpressoide_packages_support/
+.metadata/
+.project
