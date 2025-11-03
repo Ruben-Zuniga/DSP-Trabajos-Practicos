@@ -78,11 +78,6 @@ static lpadc_conv_result_t mLpadc_resultConfigStruct;
 static uint32_t sine_table[SINE_POINTS];   // tabla de seno
 static uint32_t sine_index = 0;            // índice actual en la tabla
 
-// Hardcodeo handler de TIMER 0
-void CTIMER0_IRQHandler(void){
-
-}
-
 // ---- LED RGB según frecuencia ----
 static void UpdateLedColor(uint8_t idx)
 {
@@ -181,7 +176,9 @@ void GPIO0_INT_1_IRQHANDLER(void)
         PRINTF("Match value: %d \r\n", CTIMER0->MSR[kCTIMER_Match_3]);
     }
     CTIMER_Reset(CTIMER0);
-    CTIMER_StartTimer(CTIMER0);
+
+    if(adc_run)
+    	CTIMER_StartTimer(CTIMER0);
 }
 
 /*******************************************************************************

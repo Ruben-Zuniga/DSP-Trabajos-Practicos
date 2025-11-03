@@ -443,7 +443,7 @@ instance:
       - 0:
         - matchChannelPrefixId: 'Match_3'
         - matchChannel: 'kCTIMER_Match_3'
-        - matchValueStr: '48Khz'
+        - matchValueStr: '16Khz'
         - enableCounterReset: 'true'
         - enableCounterStop: 'false'
         - outControl: 'kCTIMER_Output_Toggle'
@@ -464,7 +464,7 @@ const ctimer_config_t CTIMER0_config = {
   .prescale = 124
 };
 const ctimer_match_config_t CTIMER0_Match_3_config = {
-  .matchValue = 24,
+  .matchValue = 74,
   .enableCounterReset = true,
   .enableCounterStop = false,
   .outControl = kCTIMER_Output_Toggle,

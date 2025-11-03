@@ -10,6 +10,9 @@ frdmmcxn947_powerquad_fir_fast_cm33_core0/
 FreeRTOS_TAD_logs/
 ZephyrRTOS_TAD_logs/
 
+# Debug
+MCXN947_TP1/Debug/
+
 # Backup
 MCXN947_TP1_2/
 

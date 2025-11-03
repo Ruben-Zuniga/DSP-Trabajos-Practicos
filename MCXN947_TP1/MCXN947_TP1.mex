@@ -1283,7 +1283,7 @@
                            <struct name="0">
                               <setting name="matchChannelPrefixId" value="Match_3"/>
                               <setting name="matchChannel" value="kCTIMER_Match_3"/>
-                              <setting name="matchValueStr" value="48Khz"/>
+                              <setting name="matchValueStr" value="16Khz"/>
                               <setting name="enableCounterReset" value="true"/>
                               <setting name="enableCounterStop" value="false"/>
                               <setting name="outControl" value="kCTIMER_Output_Toggle"/>
