@@ -259,7 +259,7 @@ instance:
       - adc_interrupt:
         - IRQn: 'ADC0_IRQn'
         - enable_interrrupt: 'enabled'
-        - enable_priority: 'false'
+        - enable_priority: 'true'
         - priority: '0'
         - enable_custom_name: 'false'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
@@ -317,6 +317,8 @@ static void ADC0_init(void) {
   LPADC_SetConvCommandConfig(ADC0_PERIPHERAL, ADC0_CMD0, &ADC0_commandsConfig[0]);
   /* Configure trigger 0. */
   LPADC_SetConvTriggerConfig(ADC0_PERIPHERAL, ADC0_TRIG0, &ADC0_triggersConfig[0]);
+  /* Interrupt vector ADC0_IRQn priority settings in the NVIC. */
+  NVIC_SetPriority(ADC0_IRQN, ADC0_IRQ_PRIORITY);
   /* Enable interrupts from LPADC */
   LPADC_EnableInterrupts(ADC0_PERIPHERAL, (kLPADC_Trigger0CompletionInterruptEnable));
   /* Enable interrupt ADC0_IRQN request in the NVIC */
@@ -568,7 +570,7 @@ instance:
       - 0:
         - matchChannelPrefixId: 'Match_0'
         - matchChannel: 'kCTIMER_Match_0'
-        - matchValueStr: '50 kHz'
+        - matchValueStr: '5 kHz'
         - enableCounterReset: 'true'
         - enableCounterStop: 'false'
         - outControl: 'kCTIMER_Output_NoAction'
@@ -590,7 +592,7 @@ const ctimer_config_t CTIMER1_config = {
   .prescale = 14
 };
 const ctimer_match_config_t CTIMER1_Match_0_config = {
-  .matchValue = 199,
+  .matchValue = 1999,
   .enableCounterReset = true,
   .enableCounterStop = false,
   .outControl = kCTIMER_Output_NoAction,

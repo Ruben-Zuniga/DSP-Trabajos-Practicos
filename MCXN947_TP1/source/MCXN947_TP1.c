@@ -37,7 +37,7 @@ const uint32_t sample_rates[] = {8000, 16000, 22000, 44000, 48000}; // frecuenci
 #define SW3_PIN   6   // PIO0_6
 
 // Frecuencia del CTIMER
-#define CTIMER_CLK_FREQ 1.2e6 // 1.2 MHz
+#define CTIMER_CLK_FREQ 600000 // 1.2 MHz
 
 // Seno del DAC1
 #define SINE_POINTS   100          // cantidad de muestras por ciclo
@@ -140,14 +140,7 @@ void ctimer1_match0_callback(uint32_t flags)
 	/* Usa el seno generado en la funcion GenerateSineTable */
     DAC_SetData(DAC1, sine_table[sine_index]);
 
-    /* Usa el seno del ejemplo del SDK */
-//    uint32_t loadVal = (uint32_t)((float)4095U * (0.5F + 0.5F * arm_sin_f32((float)sine_index * PI / 500.0F)));
-//    DAC_SetData(DAC1, loadVal);
-
-    sine_index++;
-    if (sine_index >= SINE_POINTS){
-    	sine_index = 0;
-    }
+    sine_index = (sine_index + 1U) % SINE_POINTS;
 }
 
 // ---- ISR Botón SW2 (Run/Stop) ----

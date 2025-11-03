@@ -35,6 +35,8 @@ extern "C" {
 #define ADC0_PERIPHERAL ADC0
 /* ADC0 interrupt vector ID (number). */
 #define ADC0_IRQN ADC0_IRQn
+/* ADC0 interrupt vector priority. */
+#define ADC0_IRQ_PRIORITY 0
 /* ADC0 interrupt handler identifier. */
 #define ADC0_IRQHANDLER ADC0_IRQHandler
 /* Command 1 - cmd0 */

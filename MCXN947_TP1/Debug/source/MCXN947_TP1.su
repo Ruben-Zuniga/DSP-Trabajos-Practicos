@@ -12,7 +12,7 @@
 ../source/MCXN947_TP1.c:99:13:LED_SetColor	16	static
 ../source/MCXN947_TP1.c:107:6:ADC0_IRQHandler	24	static
 ../source/MCXN947_TP1.c:138:6:ctimer1_match0_callback	16	static
-../source/MCXN947_TP1.c:154:6:GPIO00_IRQHandler	16	static
-../source/MCXN947_TP1.c:172:6:GPIO01_IRQHandler	16	static
-../source/MCXN947_TP1.c:197:13:GenerateSineTable	24	static
-../source/MCXN947_TP1.c:210:5:main	8	static
+../source/MCXN947_TP1.c:147:6:GPIO00_IRQHandler	16	static
+../source/MCXN947_TP1.c:165:6:GPIO01_IRQHandler	16	static
+../source/MCXN947_TP1.c:190:13:GenerateSineTable	24	static
+../source/MCXN947_TP1.c:203:5:main	8	static
