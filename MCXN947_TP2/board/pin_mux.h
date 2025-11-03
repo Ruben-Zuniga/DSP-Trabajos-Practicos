@@ -25,8 +25,6 @@ extern "C" {
  */
 void BOARD_InitBootPins(void);
 
-#define PCR_IBE_ibe0 0x00u /*!<@brief Input Buffer Enable: Disables */
-
 /*! @name PORT1_8 (coord A1), P1_8/J9[32]
   @{ */
 
@@ -172,6 +170,7 @@ void BOARD_InitLEDsPins(void);
 void BOARD_InitBUTTONsPins(void);
 
 #define PCR_IBE_ibe0 0x00u /*!<@brief Input Buffer Enable: Disables */
+#define PCR_IBE_ibe1 0x01u /*!<@brief Input Buffer Enable: Enables */
 
 /*!
  * @brief Configures pin routing and optionally pin electrical features.

@@ -273,41 +273,45 @@ void BOARD_BootClockFROHF144M(void)
 name: BOARD_BootClockPLL150M
 called_from_default_init: true
 outputs:
-- {id: ADC0_clock.outFreq, value: 48 MHz}
+- {id: ADC0_clock.outFreq, value: 50 MHz}
 - {id: CLK_144M_clock.outFreq, value: 144 MHz}
 - {id: CLK_48M_clock.outFreq, value: 48 MHz}
-- {id: CTIMER0_clock.outFreq, value: 6 MHz, locked: true, accuracy: '0.001'}
+- {id: CTIMER0_clock.outFreq, value: 150 MHz}
 - {id: CTIMER1_clock.outFreq, value: 150 MHz}
-- {id: DAC0_clock.outFreq, value: 48 MHz}
+- {id: DAC0_clock.outFreq, value: 50 MHz}
+- {id: DAC1_clock.outFreq, value: 50 MHz}
 - {id: FLEXCOMM0_clock.outFreq, value: 12 MHz}
 - {id: FLEXCOMM4_clock.outFreq, value: 12 MHz}
 - {id: FRO_12M_clock.outFreq, value: 12 MHz}
 - {id: FRO_HF_clock.outFreq, value: 48 MHz}
-- {id: MAIN_clock.outFreq, value: 150 MHz}
-- {id: PLL0_CLK_clock.outFreq, value: 150 MHz, locked: true, accuracy: '0.001'}
-- {id: Slow_clock.outFreq, value: 37.5 MHz}
-- {id: System_clock.outFreq, value: 150 MHz}
+- {id: PLL0_CLK_clock.outFreq, value: 150 MHz}
 - {id: gdet_clock.outFreq, value: 48 MHz}
 - {id: trng_clock.outFreq, value: 48 MHz}
 settings:
 - {id: PLL0_Mode, value: Normal}
 - {id: RunPowerMode, value: OD}
-- {id: SCGMode, value: PLL0}
+- {id: SCGMode, value: PLL1}
 - {id: ADC0CLKDIV_HALT, value: Enable}
 - {id: CTIMER0CLKDIV_HALT, value: Enable}
 - {id: CTIMER1CLKDIV_HALT, value: Enable}
 - {id: DAC0CLKDIV_HALT, value: Enable}
+- {id: DAC1CLKDIV_HALT, value: Enable}
 - {id: FLEXCOMM0CLKDIV_HALT, value: Enable}
 - {id: FLEXCOMM4CLKDIV_HALT, value: Enable}
 - {id: SCG.PLL0M_MULT.scale, value: '50', locked: true}
 - {id: SCG.PLL0SRCSEL.sel, value: SCG.FIRC_48M}
 - {id: SCG.PLL0_NDIV.scale, value: '8', locked: true}
-- {id: SCG.SCSSEL.sel, value: SCG.PLL0_CLK}
-- {id: SYSCON.ADC0CLKSEL.sel, value: SCG.FRO_HF}
-- {id: SYSCON.CTIMER0CLKDIV.scale, value: '25'}
+- {id: SCG.PLL0_PDIV.scale, value: '2', locked: true}
+- {id: SCG.SCSSEL.sel, value: SCG.PLL1_CLK}
+- {id: SYSCON.ADC0CLKDIV.scale, value: '3'}
+- {id: SYSCON.ADC0CLKSEL.sel, value: SCG.PLL0_CLK}
+- {id: SYSCON.CTIMER0CLKDIV.scale, value: '1', locked: true}
 - {id: SYSCON.CTIMERCLKSEL0.sel, value: SCG.PLL0_CLK}
 - {id: SYSCON.CTIMERCLKSEL1.sel, value: SCG.PLL0_CLK}
-- {id: SYSCON.DAC0CLKSEL.sel, value: SCG.FRO_HF}
+- {id: SYSCON.DAC0CLKDIV.scale, value: '3'}
+- {id: SYSCON.DAC0CLKSEL.sel, value: SCG.PLL0_CLK}
+- {id: SYSCON.DAC1CLKDIV.scale, value: '3'}
+- {id: SYSCON.DAC1CLKSEL.sel, value: SCG.PLL0_CLK}
 - {id: SYSCON.FCCLKSEL0.sel, value: SCG.FRO_12M}
 - {id: SYSCON.FCCLKSEL4.sel, value: SCG.FRO_12M}
 - {id: SYSCON.FLEXSPICLKSEL.sel, value: NO_CLOCK}
@@ -341,8 +345,8 @@ void BOARD_BootClockPLL150M(void)
       .CoreLDODriveStrength = kSPC_CoreLDO_NormalDriveStrength,
     };
     SPC_SetActiveModeCoreLDORegulatorConfig(SPC0, &ldoOpt);
-    /* Configure Flash wait-states to support 1.2V voltage level and 150000000Hz frequency */;
-    FMU0->FCTRL = (FMU0->FCTRL & ~((uint32_t)FMU_FCTRL_RWSC_MASK)) | (FMU_FCTRL_RWSC(0x3U));
+    /* Configure Flash wait-states to support 1.2V voltage level and 0Hz frequency */;
+    FMU0->FCTRL = (FMU0->FCTRL & ~((uint32_t)FMU_FCTRL_RWSC_MASK)) | (FMU_FCTRL_RWSC(0x0U));
     /* Specifies the 1.2V operating voltage for the SRAM's read/write timing margin */
     spc_sram_voltage_config_t sramCfg = {
       .operateVoltage       = kSPC_sramOperateAt1P2V,
@@ -364,19 +368,19 @@ void BOARD_BootClockPLL150M(void)
     CLOCK_SetPll0MonitorMode(kSCG_Pll0MonitorDisable);    /* Pll0 Monitor is disabled */
 
     /*!< Set up clock selectors  */
-    CLOCK_AttachClk(kPLL0_to_MAIN_CLK);
-    CLOCK_AttachClk(kFRO_HF_to_ADC0);                 /*!< Switch ADC0 to FRO_HF */
-    CLOCK_AttachClk(kFRO_HF_to_DAC0);                 /*!< Switch DAC0 to FRO_HF */
+    CLOCK_AttachClk(kPLL0_to_ADC0);                 /*!< Switch ADC0 to PLL0 */
+    CLOCK_AttachClk(kPLL0_to_DAC0);                 /*!< Switch DAC0 to PLL0 */
+    CLOCK_AttachClk(kPLL0_to_DAC1);                 /*!< Switch DAC1 to PLL0 */
     CLOCK_AttachClk(kPLL0_to_CTIMER0);                 /*!< Switch CTIMER0 to PLL0 */
     CLOCK_AttachClk(kPLL0_to_CTIMER1);                 /*!< Switch CTIMER1 to PLL0 */
     CLOCK_AttachClk(kFRO12M_to_FLEXCOMM0);                 /*!< Switch FLEXCOMM0 to FRO12M */
     CLOCK_AttachClk(kFRO12M_to_FLEXCOMM4);                 /*!< Switch FLEXCOMM4 to FRO12M */
 
     /*!< Set up dividers */
-    CLOCK_SetClkDiv(kCLOCK_DivAhbClk, 1U);           /*!< Set AHBCLKDIV divider to value 1 */
-    CLOCK_SetClkDiv(kCLOCK_DivAdc0Clk, 1U);           /*!< Set ADC0CLKDIV divider to value 1 */
-    CLOCK_SetClkDiv(kCLOCK_DivDac0Clk, 1U);           /*!< Set DAC0CLKDIV divider to value 1 */
-    CLOCK_SetClkDiv(kCLOCK_DivCtimer0Clk, 25U);           /*!< Set CTIMER0CLKDIV divider to value 25 */
+    CLOCK_SetClkDiv(kCLOCK_DivAdc0Clk, 3U);           /*!< Set ADC0CLKDIV divider to value 3 */
+    CLOCK_SetClkDiv(kCLOCK_DivDac0Clk, 3U);           /*!< Set DAC0CLKDIV divider to value 3 */
+    CLOCK_SetClkDiv(kCLOCK_DivDac1Clk, 3U);           /*!< Set DAC1CLKDIV divider to value 3 */
+    CLOCK_SetClkDiv(kCLOCK_DivCtimer0Clk, 1U);           /*!< Set CTIMER0CLKDIV divider to value 1 */
     CLOCK_SetClkDiv(kCLOCK_DivCtimer1Clk, 1U);           /*!< Set CTIMER1CLKDIV divider to value 1 */
     CLOCK_SetClkDiv(kCLOCK_DivFlexcom0Clk, 1U);           /*!< Set FLEXCOMM0CLKDIV divider to value 1 */
     CLOCK_SetClkDiv(kCLOCK_DivFlexcom4Clk, 1U);           /*!< Set FLEXCOMM4CLKDIV divider to value 1 */

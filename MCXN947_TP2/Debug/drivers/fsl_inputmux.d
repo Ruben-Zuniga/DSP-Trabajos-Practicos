@@ -1,5 +1,6 @@
-board/pin_mux.o board/pin_mux.d: ../board/pin_mux.c \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_common.h \
+drivers/fsl_inputmux.o drivers/fsl_inputmux.d: ../drivers/fsl_inputmux.c \
+ ../drivers/fsl_inputmux.h ../drivers/fsl_inputmux_connections.h \
+ ../drivers/fsl_common.h \
  /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device/fsl_device_registers.h \
  /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device/MCXN947_cm33_core0.h \
  /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device/periph/PERI_ADC.h \
@@ -88,16 +89,11 @@ board/pin_mux.o board/pin_mux.d: ../board/pin_mux.c \
  /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device/periph/PERI_VREF.h \
  /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device/periph/PERI_WUU.h \
  /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device/periph/PERI_WWDT.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_common_arm.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_clock.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_common.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_reset.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_port.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_gpio.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_inputmux.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_inputmux_connections.h \
- ../board/pin_mux.h
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_common.h:
+ ../drivers/fsl_common_arm.h ../drivers/fsl_clock.h \
+ ../drivers/fsl_reset.h
+../drivers/fsl_inputmux.h:
+../drivers/fsl_inputmux_connections.h:
+../drivers/fsl_common.h:
 /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device/fsl_device_registers.h:
 /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device/MCXN947_cm33_core0.h:
 /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device/periph/PERI_ADC.h:
@@ -186,12 +182,6 @@ board/pin_mux.o board/pin_mux.d: ../board/pin_mux.c \
 /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device/periph/PERI_VREF.h:
 /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device/periph/PERI_WUU.h:
 /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device/periph/PERI_WWDT.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_common_arm.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_clock.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_common.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_reset.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_port.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_gpio.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_inputmux.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_inputmux_connections.h:
-../board/pin_mux.h:
+../drivers/fsl_common_arm.h:
+../drivers/fsl_clock.h:
+../drivers/fsl_reset.h:

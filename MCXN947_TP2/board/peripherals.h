@@ -33,6 +33,12 @@ extern "C" {
 #define LP_FLEXCOMM4_CLOCK_SOURCE 12000000UL
 /* Alias for ADC0 peripheral */
 #define ADC0_PERIPHERAL ADC0
+/* ADC0 interrupt vector ID (number). */
+#define ADC0_IRQN ADC0_IRQn
+/* ADC0 interrupt vector priority. */
+#define ADC0_IRQ_PRIORITY 0
+/* ADC0 interrupt handler identifier. */
+#define ADC0_IRQHANDLER ADC0_IRQHandler
 /* Command 1 - cmd0 */
 #define ADC0_CMD0 1U
 /* Trigger 0 - trig0 */
@@ -52,38 +58,32 @@ extern "C" {
 /* GPIO0 interrupt vector ID (number). */
 #define GPIO0_INT_1_IRQN GPIO01_IRQn
 /* GPIO0 interrupt vector priority. */
-#define GPIO0_INT_1_IRQ_PRIORITY 0
+#define GPIO0_INT_1_IRQ_PRIORITY 1
 /* GPIO0 interrupt handler identifier. */
 #define GPIO0_INT_1_IRQHANDLER GPIO01_IRQHandler
 /* Definition of peripheral ID */
 #define CTIMER0_PERIPHERAL CTIMER0
 /* Timer tick frequency in Hz (input frequency of the timer) */
-#define CTIMER0_TICK_FREQ 6000000UL
+#define CTIMER0_TICK_FREQ 1200000UL
 /* Timer tick period in ns (input period of the timer) */
-#define CTIMER0_TICK_PERIOD 167UL
+#define CTIMER0_TICK_PERIOD 833UL
 /* Definition of PWM period channel. */
 #define CTIMER0_PWM_PERIOD_CH kCTIMER_Match_0
-/* Definition of channel 0 ID */
-#define CTIMER0_MATCH_0_CHANNEL kCTIMER_Match_0
-/* CTIMER0 interrupt vector ID (number). */
-#define CTIMER0_TIMER_IRQN CTIMER0_IRQn
-/* CTIMER0 interrupt vector priority. */
-#define CTIMER0_TIMER_IRQ_PRIORITY 3
+/* Definition of channel 3 ID */
+#define CTIMER0_MATCH_3_CHANNEL kCTIMER_Match_3
 /* BOARD_InitPeripherals defines for DAC0 */
 /* Definition of peripheral ID */
 #define DAC0_PERIPHERAL DAC0
 /* DAC0 interrupt vector ID (number). */
 #define DAC0_IRQN DAC0_IRQn
-/* DAC0 interrupt vector priority. */
-#define DAC0_IRQ_PRIORITY 2
 /* DAC0 interrupt handler identifier. */
 #define DAC0_IRQHANDLER DAC0_IRQHandler
 /* Definition of peripheral ID */
 #define CTIMER1_PERIPHERAL CTIMER1
 /* Timer tick frequency in Hz (input frequency of the timer) */
-#define CTIMER1_TICK_FREQ 30000000UL
+#define CTIMER1_TICK_FREQ 10000000UL
 /* Timer tick period in ns (input period of the timer) */
-#define CTIMER1_TICK_PERIOD 33UL
+#define CTIMER1_TICK_PERIOD 100UL
 /* Definition of PWM period channel. */
 #define CTIMER1_PWM_PERIOD_CH kCTIMER_Match_0
 /* Definition of channel 0 ID */
@@ -97,8 +97,6 @@ extern "C" {
 #define DAC1_PERIPHERAL DAC1
 /* DAC1 interrupt vector ID (number). */
 #define DAC1_IRQN DAC1_IRQn
-/* DAC1 interrupt vector priority. */
-#define DAC1_IRQ_PRIORITY 3
 /* DAC1 interrupt handler identifier. */
 #define DAC1_IRQHANDLER DAC1_IRQHandler
 
@@ -110,7 +108,7 @@ extern const lpadc_config_t ADC0_config;
 extern lpadc_conv_command_config_t ADC0_commandsConfig[1];
 extern lpadc_conv_trigger_config_t ADC0_triggersConfig[1];
 extern const ctimer_config_t CTIMER0_config;
-extern const ctimer_match_config_t CTIMER0_Match_0_config;
+extern const ctimer_match_config_t CTIMER0_Match_3_config;
 /* LPDAC configuration */
 extern const dac_config_t DAC0_config;
 extern const ctimer_config_t CTIMER1_config;
@@ -121,9 +119,6 @@ extern const dac_config_t DAC1_config;
 /***********************************************************************************************************************
  * Callback functions
  **********************************************************************************************************************/
-  /* Single callback function declaration */
-extern void ctimer_match0_callback(uint32_t flags);
-extern ctimer_callback_t CTIMER0_callback[];
   /* Single callback function declaration */
 extern void ctimer1_match0_callback(uint32_t flags);
 extern ctimer_callback_t CTIMER1_callback[];

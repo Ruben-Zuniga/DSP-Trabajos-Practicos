@@ -305,6 +305,7 @@ pin_labels:
 #include "fsl_common.h"
 #include "fsl_port.h"
 #include "fsl_gpio.h"
+#include "fsl_inputmux.h"
 #include "pin_mux.h"
 
 /* FUNCTION ************************************************************************************************************
@@ -332,7 +333,6 @@ BOARD_InitDEBUG_UARTPins:
     invert_input: normal}
   - {pin_num: B1, peripheral: LP_FLEXCOMM4, signal: LPFLEXCOMM_P1, pin_signal: PIO1_9/TRACE_DATA1/FC4_P1/FC5_P5/CT_INP9/SCT0_OUT3/FLEXIO0_D17/SMARTDMA_PIO5/PLU_OUT1/ENET0_TXD3/I3C1_SCL/TSI0_CH18/ADC1_A9,
     slew_rate: fast, open_drain: disable, drive_strength: low, pull_select: down, pull_enable: disable, passive_filter: disable, input_buffer: enable, invert_input: normal}
-  - {pin_num: U1, peripheral: DAC1, signal: OUT, pin_signal: PIO4_3/WUU0_IN19/TRIG_IN7/FC2_P3/CT_INP13/SMARTDMA_PIO27/PLU_IN3/DAC1_OUT/ADC0_B4/ADC1_B4/CMP0_IN5N/CMP1_IN5N/CMP2_IN5N}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
 /* clang-format on */
@@ -347,8 +347,6 @@ void BOARD_InitDEBUG_UARTPins(void)
 {
     /* Enables the clock for PORT1: Enables clock */
     CLOCK_EnableClock(kCLOCK_Port1);
-    /* Enables the clock for PORT4: Enables clock */
-    CLOCK_EnableClock(kCLOCK_Port4);
 
     const port_pin_config_t DEBUG_UART_RX = {/* Internal pull-up/down resistor is disabled */
                                              .pullSelect = kPORT_PullDisable,
@@ -395,16 +393,6 @@ void BOARD_InitDEBUG_UARTPins(void)
                                              .lockRegister = kPORT_UnlockRegister};
     /* PORT1_9 (pin B1) is configured as FC4_P1 */
     PORT_SetPinConfig(BOARD_INITDEBUG_UARTPINS_DEBUG_UART_TX_PORT, BOARD_INITDEBUG_UARTPINS_DEBUG_UART_TX_PIN, &DEBUG_UART_TX);
-
-    /* PORT4_3 (pin U1) is configured as DAC1_OUT */
-    PORT_SetPinMux(PORT4, 3U, kPORT_MuxAlt0);
-
-    PORT4->PCR[3] = ((PORT4->PCR[3] &
-                      /* Mask bits to zero which are setting */
-                      (~(PORT_PCR_IBE_MASK)))
-
-                     /* Input Buffer Enable: Disables. */
-                     | PORT_PCR_IBE(PCR_IBE_ibe0));
 }
 
 /* clang-format off */
@@ -740,6 +728,9 @@ BOARD_InitANALOGPins:
 - options: {callFromInitBoot: 'true', coreID: cm33_core0, enableClock: 'true'}
 - pin_list:
   - {pin_num: P3, peripheral: ADC0, signal: 'A, 0', pin_signal: ADC0_A0}
+  - {pin_num: U1, peripheral: DAC1, signal: OUT, pin_signal: PIO4_3/WUU0_IN19/TRIG_IN7/FC2_P3/CT_INP13/SMARTDMA_PIO27/PLU_IN3/DAC1_OUT/ADC0_B4/ADC1_B4/CMP0_IN5N/CMP1_IN5N/CMP2_IN5N}
+  - {pin_num: C9, peripheral: CTIMER0, signal: 'MATCH, 3', pin_signal: PIO0_19/WUU0_IN3/EWM0_OUT_b/FC0_P3/CT0_MAT3/FLEXIO0_D3/HSCMP1_OUT/TSI0_CH14/ADC0_A11}
+  - {peripheral: ADC0, signal: 'TRG_CH, 0', pin_signal: CTIMER0_MATCH3}
   - {pin_num: T1, peripheral: DAC0, signal: OUT, pin_signal: PIO4_2/TRIG_IN6/FC2_P2/CT_INP12/SMARTDMA_PIO26/PLU_IN2/SINC0_MBIT3/DAC0_OUT/ADC0_A4/ADC1_A4/CMP0_IN4N/CMP1_IN4N/CMP2_IN4N}
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS ***********
  */
@@ -753,13 +744,39 @@ BOARD_InitANALOGPins:
  * END ****************************************************************************************************************/
 void BOARD_InitANALOGPins(void)
 {
+    /* Enables the clock for INPUTMUX: Enables clock */
+    CLOCK_EnableClock(kCLOCK_InputMux0);
+    /* Enables the clock for PORT0 controller: Enables clock */
+    CLOCK_EnableClock(kCLOCK_Port0);
     /* Enables the clock for PORT4: Enables clock */
     CLOCK_EnableClock(kCLOCK_Port4);
+    /* Timer CTIMER0 Match 3 is selected as trigger input for ADC0 channel 0 */
+    INPUTMUX_AttachSignal(INPUTMUX0, 0U, kINPUTMUX_Ctimer0M3ToAdc0Trigger);
+
+    /* PORT0_19 (pin C9) is configured as CT0_MAT3 */
+    PORT_SetPinMux(PORT0, 19U, kPORT_MuxAlt4);
+
+    PORT0->PCR[19] = ((PORT0->PCR[19] &
+                       /* Mask bits to zero which are setting */
+                       (~(PORT_PCR_IBE_MASK)))
+
+                      /* Input Buffer Enable: Enables. */
+                      | PORT_PCR_IBE(PCR_IBE_ibe1));
 
     /* PORT4_2 (pin T1) is configured as DAC0_OUT */
     PORT_SetPinMux(PORT4, 2U, kPORT_MuxAlt0);
 
     PORT4->PCR[2] = ((PORT4->PCR[2] &
+                      /* Mask bits to zero which are setting */
+                      (~(PORT_PCR_IBE_MASK)))
+
+                     /* Input Buffer Enable: Disables. */
+                     | PORT_PCR_IBE(PCR_IBE_ibe0));
+
+    /* PORT4_3 (pin U1) is configured as DAC1_OUT */
+    PORT_SetPinMux(PORT4, 3U, kPORT_MuxAlt0);
+
+    PORT4->PCR[3] = ((PORT4->PCR[3] &
                       /* Mask bits to zero which are setting */
                       (~(PORT_PCR_IBE_MASK)))
 

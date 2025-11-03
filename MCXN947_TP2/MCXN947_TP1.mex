@@ -328,11 +328,6 @@
                         <data>true</data>
                      </feature>
                   </dependency>
-                  <dependency resourceType="Peripheral" resourceId="DAC1" description="Peripheral DAC1 signals are routed in the Pins Tool, but the peripheral is not initialized in the Peripherals Tool." problem_level="1" source="Pins:BOARD_InitDEBUG_UARTPins">
-                     <feature name="initialized" evaluation="equal">
-                        <data>true</data>
-                     </feature>
-                  </dependency>
                   <dependency resourceType="SWComponent" resourceId="platform.drivers.common" description="Pins initialization requires the COMMON Driver in the project." problem_level="2" source="Pins:BOARD_InitDEBUG_UARTPins">
                      <feature name="enabled" evaluation="equal" configuration="cm33_core0">
                         <data>true</data>
@@ -370,7 +365,6 @@
                         <pin_feature name="invert_input" value="normal"/>
                      </pin_features>
                   </pin>
-                  <pin peripheral="DAC1" signal="OUT" pin_num="U1" pin_signal="PIO4_3/WUU0_IN19/TRIG_IN7/FC2_P3/CT_INP13/SMARTDMA_PIO27/PLU_IN3/DAC1_OUT/ADC0_B4/ADC1_B4/CMP0_IN5N/CMP1_IN5N/CMP2_IN5N"/>
                </pins>
             </function>
             <function name="BOARD_InitSWD_DEBUGPins">
@@ -569,6 +563,16 @@
                         <data>true</data>
                      </feature>
                   </dependency>
+                  <dependency resourceType="Peripheral" resourceId="DAC1" description="Peripheral DAC1 signals are routed in the Pins Tool, but the peripheral is not initialized in the Peripherals Tool." problem_level="1" source="Pins:BOARD_InitANALOGPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
+                  <dependency resourceType="Peripheral" resourceId="CTIMER0" description="Peripheral CTIMER0 signals are routed in the Pins Tool, but the peripheral is not initialized in the Peripherals Tool." problem_level="1" source="Pins:BOARD_InitANALOGPins">
+                     <feature name="initialized" evaluation="equal">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
                   <dependency resourceType="Peripheral" resourceId="DAC0" description="Peripheral DAC0 signals are routed in the Pins Tool, but the peripheral is not initialized in the Peripherals Tool." problem_level="1" source="Pins:BOARD_InitANALOGPins">
                      <feature name="initialized" evaluation="equal">
                         <data>true</data>
@@ -584,9 +588,17 @@
                         <data>true</data>
                      </feature>
                   </dependency>
+                  <dependency resourceType="SWComponent" resourceId="platform.drivers.inputmux" description="Pins initialization requires the INPUTMUX Driver in the project." problem_level="2" source="Pins:BOARD_InitANALOGPins">
+                     <feature name="enabled" evaluation="equal" configuration="cm33_core0">
+                        <data>true</data>
+                     </feature>
+                  </dependency>
                </dependencies>
                <pins>
                   <pin peripheral="ADC0" signal="A, 0" pin_num="P3" pin_signal="ADC0_A0"/>
+                  <pin peripheral="DAC1" signal="OUT" pin_num="U1" pin_signal="PIO4_3/WUU0_IN19/TRIG_IN7/FC2_P3/CT_INP13/SMARTDMA_PIO27/PLU_IN3/DAC1_OUT/ADC0_B4/ADC1_B4/CMP0_IN5N/CMP1_IN5N/CMP2_IN5N"/>
+                  <pin peripheral="CTIMER0" signal="MATCH, 3" pin_num="C9" pin_signal="PIO0_19/WUU0_IN3/EWM0_OUT_b/FC0_P3/CT0_MAT3/FLEXIO0_D3/HSCMP1_OUT/TSI0_CH14/ADC0_A11"/>
+                  <pin peripheral="ADC0" signal="TRG_CH, 0" pin_num="" pin_signal="CTIMER0_MATCH3"/>
                   <pin peripheral="DAC0" signal="OUT" pin_num="T1" pin_signal="PIO4_2/TRIG_IN6/FC2_P2/CT_INP12/SMARTDMA_PIO26/PLU_IN2/SINC0_MBIT3/DAC0_OUT/ADC0_A4/ADC1_A4/CMP0_IN4N/CMP1_IN4N/CMP2_IN4N"/>
                </pins>
             </function>
@@ -807,42 +819,46 @@
                </dependencies>
                <clock_sources/>
                <clock_outputs>
-                  <clock_output id="ADC0_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="ADC0_clock.outFreq" value="50 MHz" locked="false" accuracy=""/>
                   <clock_output id="CLK_144M_clock.outFreq" value="144 MHz" locked="false" accuracy=""/>
                   <clock_output id="CLK_48M_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
-                  <clock_output id="CTIMER0_clock.outFreq" value="6 MHz" locked="true" accuracy="0.001"/>
+                  <clock_output id="CTIMER0_clock.outFreq" value="150 MHz" locked="false" accuracy=""/>
                   <clock_output id="CTIMER1_clock.outFreq" value="150 MHz" locked="false" accuracy=""/>
-                  <clock_output id="DAC0_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
+                  <clock_output id="DAC0_clock.outFreq" value="50 MHz" locked="false" accuracy=""/>
+                  <clock_output id="DAC1_clock.outFreq" value="50 MHz" locked="false" accuracy=""/>
                   <clock_output id="FLEXCOMM0_clock.outFreq" value="12 MHz" locked="false" accuracy=""/>
                   <clock_output id="FLEXCOMM4_clock.outFreq" value="12 MHz" locked="false" accuracy=""/>
                   <clock_output id="FRO_12M_clock.outFreq" value="12 MHz" locked="false" accuracy=""/>
                   <clock_output id="FRO_HF_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
-                  <clock_output id="MAIN_clock.outFreq" value="150 MHz" locked="false" accuracy=""/>
-                  <clock_output id="PLL0_CLK_clock.outFreq" value="150 MHz" locked="true" accuracy="0.001"/>
-                  <clock_output id="Slow_clock.outFreq" value="37.5 MHz" locked="false" accuracy=""/>
-                  <clock_output id="System_clock.outFreq" value="150 MHz" locked="false" accuracy=""/>
+                  <clock_output id="PLL0_CLK_clock.outFreq" value="150 MHz" locked="false" accuracy=""/>
                   <clock_output id="gdet_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
                   <clock_output id="trng_clock.outFreq" value="48 MHz" locked="false" accuracy=""/>
                </clock_outputs>
                <clock_settings>
                   <setting id="PLL0_Mode" value="Normal" locked="false"/>
                   <setting id="RunPowerMode" value="OD" locked="false"/>
-                  <setting id="SCGMode" value="PLL0" locked="false"/>
+                  <setting id="SCGMode" value="PLL1" locked="false"/>
                   <setting id="ADC0CLKDIV_HALT" value="Enable" locked="false"/>
                   <setting id="CTIMER0CLKDIV_HALT" value="Enable" locked="false"/>
                   <setting id="CTIMER1CLKDIV_HALT" value="Enable" locked="false"/>
                   <setting id="DAC0CLKDIV_HALT" value="Enable" locked="false"/>
+                  <setting id="DAC1CLKDIV_HALT" value="Enable" locked="false"/>
                   <setting id="FLEXCOMM0CLKDIV_HALT" value="Enable" locked="false"/>
                   <setting id="FLEXCOMM4CLKDIV_HALT" value="Enable" locked="false"/>
                   <setting id="SCG.PLL0M_MULT.scale" value="50" locked="true"/>
                   <setting id="SCG.PLL0SRCSEL.sel" value="SCG.FIRC_48M" locked="false"/>
                   <setting id="SCG.PLL0_NDIV.scale" value="8" locked="true"/>
-                  <setting id="SCG.SCSSEL.sel" value="SCG.PLL0_CLK" locked="false"/>
-                  <setting id="SYSCON.ADC0CLKSEL.sel" value="SCG.FRO_HF" locked="false"/>
-                  <setting id="SYSCON.CTIMER0CLKDIV.scale" value="25" locked="false"/>
+                  <setting id="SCG.PLL0_PDIV.scale" value="2" locked="true"/>
+                  <setting id="SCG.SCSSEL.sel" value="SCG.PLL1_CLK" locked="false"/>
+                  <setting id="SYSCON.ADC0CLKDIV.scale" value="3" locked="false"/>
+                  <setting id="SYSCON.ADC0CLKSEL.sel" value="SCG.PLL0_CLK" locked="false"/>
+                  <setting id="SYSCON.CTIMER0CLKDIV.scale" value="1" locked="true"/>
                   <setting id="SYSCON.CTIMERCLKSEL0.sel" value="SCG.PLL0_CLK" locked="false"/>
                   <setting id="SYSCON.CTIMERCLKSEL1.sel" value="SCG.PLL0_CLK" locked="false"/>
-                  <setting id="SYSCON.DAC0CLKSEL.sel" value="SCG.FRO_HF" locked="false"/>
+                  <setting id="SYSCON.DAC0CLKDIV.scale" value="3" locked="false"/>
+                  <setting id="SYSCON.DAC0CLKSEL.sel" value="SCG.PLL0_CLK" locked="false"/>
+                  <setting id="SYSCON.DAC1CLKDIV.scale" value="3" locked="false"/>
+                  <setting id="SYSCON.DAC1CLKSEL.sel" value="SCG.PLL0_CLK" locked="false"/>
                   <setting id="SYSCON.FCCLKSEL0.sel" value="SCG.FRO_12M" locked="false"/>
                   <setting id="SYSCON.FCCLKSEL4.sel" value="SCG.FRO_12M" locked="false"/>
                   <setting id="SYSCON.FLEXSPICLKSEL.sel" value="NO_CLOCK" locked="false"/>
@@ -1055,6 +1071,11 @@
                         <data type="Frequency" unit="Hz">0</data>
                      </feature>
                   </dependency>
+                  <dependency resourceType="PeripheralUnifiedSignal" resourceId="CTIMER0.ctimer_match.3" description="Match output of the match 3 channel of peripheral CTIMER0 is not routed." problem_level="1" source="Peripherals:BOARD_InitPeripherals">
+                     <feature name="routed" evaluation="equal">
+                        <data type="Boolean">true</data>
+                     </feature>
+                  </dependency>
                   <dependency resourceType="SWComponent" resourceId="platform.drivers.mcx_spc" description="The fsl_spc driver is missing in the project ." problem_level="2" source="Peripherals:BOARD_InitPeripherals">
                      <feature name="enabled" evaluation="equal">
                         <data type="Boolean">true</data>
@@ -1079,8 +1100,6 @@
                            <struct name="1"/>
                            <struct name="2"/>
                            <struct name="3"/>
-                           <struct name="4"/>
-                           <struct name="5"/>
                         </array>
                         <array name="interrupts"/>
                      </config_set>
@@ -1173,12 +1192,12 @@
                               <setting name="enableAutoChannelIncrement" value="false"/>
                               <setting name="loopCount" value="0"/>
                               <setting name="hardwareAverageMode" value="kLPADC_HardwareAverageCount1"/>
-                              <setting name="sampleTimeMode" value="kLPADC_SampleTimeADCK131"/>
+                              <setting name="sampleTimeMode" value="kLPADC_SampleTimeADCK3"/>
                               <setting name="hardwareCompareMode" value="kLPADC_HardwareCompareDisabled"/>
                               <setting name="hardwareCompareValueHigh" value="0"/>
                               <setting name="hardwareCompareValueLow" value="0"/>
-                              <setting name="conversionResoultuionMode" value="kLPADC_ConversionResolutionStandard"/>
-                              <setting name="enableWaitTrigger" value="false"/>
+                              <setting name="conversionResoultuionMode" value="kLPADC_ConversionResolutionHigh"/>
+                              <setting name="enableWaitTrigger" value="true"/>
                            </struct>
                         </array>
                         <array name="lpadcConvTriggerConfig">
@@ -1195,13 +1214,15 @@
                         </array>
                         <struct name="IRQ_cfg">
                            <set name="interrupt_type">
-                              <selected/>
+                              <selected>
+                                 <id>kLPADC_Trigger0CompletionInterruptEnable</id>
+                              </selected>
                            </set>
-                           <setting name="enable_irq" value="false"/>
+                           <setting name="enable_irq" value="true"/>
                            <struct name="adc_interrupt">
                               <setting name="IRQn" value="ADC0_IRQn"/>
                               <setting name="enable_interrrupt" value="enabled"/>
-                              <setting name="enable_priority" value="false"/>
+                              <setting name="enable_priority" value="true"/>
                               <setting name="priority" value="0"/>
                               <setting name="enable_custom_name" value="false"/>
                            </struct>
@@ -1236,7 +1257,7 @@
                            <setting name="IRQn" value="GPIO01_IRQn"/>
                            <setting name="enable_interrrupt" value="enabled"/>
                            <setting name="enable_priority" value="true"/>
-                           <setting name="priority" value="0"/>
+                           <setting name="priority" value="1"/>
                            <setting name="enable_custom_name" value="false"/>
                         </struct>
                         <setting name="enable_irq_EFT" value="false"/>
@@ -1254,31 +1275,30 @@
                         <struct name="ctimerConfig">
                            <setting name="mode" value="kCTIMER_TimerMode"/>
                            <setting name="clockSource" value="FunctionClock"/>
-                           <setting name="clockSourceFreq" value="custom:150 MHz"/>
-                           <setting name="timerPrescaler" value="6 MHz"/>
+                           <setting name="clockSourceFreq" value="ClocksTool_DefaultInit"/>
+                           <setting name="timerPrescaler" value="125"/>
                         </struct>
                         <setting name="EnableTimerInInit" value="false"/>
                         <array name="matchChannels">
                            <struct name="0">
-                              <setting name="matchChannelPrefixId" value="Match_0"/>
-                              <setting name="matchChannel" value="kCTIMER_Match_0"/>
-                              <setting name="matchValueStr" value="8 kHz"/>
+                              <setting name="matchChannelPrefixId" value="Match_3"/>
+                              <setting name="matchChannel" value="kCTIMER_Match_3"/>
+                              <setting name="matchValueStr" value="16Khz"/>
                               <setting name="enableCounterReset" value="true"/>
                               <setting name="enableCounterStop" value="false"/>
-                              <setting name="outControl" value="kCTIMER_Output_NoAction"/>
+                              <setting name="outControl" value="kCTIMER_Output_Toggle"/>
                               <setting name="outPinInitValue" value="low"/>
-                              <setting name="enableInterrupt" value="true"/>
+                              <setting name="enableInterrupt" value="false"/>
                            </struct>
                         </array>
                         <array name="captureChannels"/>
                         <struct name="interruptCallbackConfig">
                            <struct name="interrupt">
                               <setting name="IRQn" value="CTIMER0_IRQn"/>
-                              <setting name="enable_priority" value="true"/>
-                              <setting name="priority" value="3"/>
+                              <setting name="enable_priority" value="false"/>
+                              <setting name="priority" value="2"/>
                            </struct>
-                           <setting name="callback" value="kCTIMER_SingleCallback"/>
-                           <setting name="singleCallback" value="ctimer_match0_callback"/>
+                           <setting name="callback" value="kCTIMER_NoCallback"/>
                         </struct>
                      </config_set>
                   </instance>
@@ -1286,14 +1306,14 @@
                      <config_set name="fsl_dac">
                         <struct name="dac_config">
                            <setting name="fifoWatermarkLevel" value="0"/>
-                           <setting name="fifoTriggerMode" value="kDAC_FIFOTriggerByHardwareMode"/>
+                           <setting name="fifoTriggerMode" value="kDAC_FIFOTriggerBySoftwareMode"/>
                            <setting name="fifoWorkMode" value="kDAC_FIFODisabled"/>
                            <setting name="referenceVoltageSource" value="kDAC_ReferenceVoltageSourceAlt1"/>
                            <setting name="referenceCurrentSource" value="kDAC_ReferenceCurrentSourcePtat"/>
                            <setting name="enableOpampBuffer" value="true"/>
                            <setting name="periodicTriggerNumber" value="0"/>
                            <setting name="periodicTriggerWidth" value="0"/>
-                           <setting name="syncTime" value="1"/>
+                           <setting name="syncTime" value="0"/>
                            <setting name="enableLowerLowPowerMode" value="true"/>
                         </struct>
                         <setting name="enable_dma" value="false"/>
@@ -1305,7 +1325,7 @@
                            <set name="dac_interrupts">
                               <selected/>
                            </set>
-                           <setting name="enable_irq" value="true"/>
+                           <setting name="enable_irq" value="false"/>
                            <struct name="interrupt">
                               <setting name="IRQn" value="DAC0_IRQn"/>
                               <setting name="enable_interrrupt" value="enabled"/>
@@ -1322,14 +1342,14 @@
                            <setting name="mode" value="kCTIMER_TimerMode"/>
                            <setting name="clockSource" value="FunctionClock"/>
                            <setting name="clockSourceFreq" value="ClocksTool_DefaultInit"/>
-                           <setting name="timerPrescaler" value="25.6 MHz"/>
+                           <setting name="timerPrescaler" value="15"/>
                         </struct>
                         <setting name="EnableTimerInInit" value="false"/>
                         <array name="matchChannels">
                            <struct name="0">
                               <setting name="matchChannelPrefixId" value="Match_0"/>
                               <setting name="matchChannel" value="kCTIMER_Match_0"/>
-                              <setting name="matchValueStr" value="2.56 kHz"/>
+                              <setting name="matchValueStr" value="5 kHz"/>
                               <setting name="enableCounterReset" value="true"/>
                               <setting name="enableCounterStop" value="false"/>
                               <setting name="outControl" value="kCTIMER_Output_NoAction"/>
@@ -1353,14 +1373,14 @@
                      <config_set name="fsl_dac">
                         <struct name="dac_config">
                            <setting name="fifoWatermarkLevel" value="0"/>
-                           <setting name="fifoTriggerMode" value="kDAC_FIFOTriggerByHardwareMode"/>
+                           <setting name="fifoTriggerMode" value="kDAC_FIFOTriggerBySoftwareMode"/>
                            <setting name="fifoWorkMode" value="kDAC_FIFODisabled"/>
                            <setting name="referenceVoltageSource" value="kDAC_ReferenceVoltageSourceAlt1"/>
                            <setting name="referenceCurrentSource" value="kDAC_ReferenceCurrentSourcePtat"/>
                            <setting name="enableOpampBuffer" value="true"/>
                            <setting name="periodicTriggerNumber" value="0"/>
                            <setting name="periodicTriggerWidth" value="0"/>
-                           <setting name="syncTime" value="1"/>
+                           <setting name="syncTime" value="0"/>
                            <setting name="enableLowerLowPowerMode" value="true"/>
                         </struct>
                         <setting name="enable_dma" value="false"/>
@@ -1372,7 +1392,7 @@
                            <set name="dac_interrupts">
                               <selected/>
                            </set>
-                           <setting name="enable_irq" value="true"/>
+                           <setting name="enable_irq" value="false"/>
                            <struct name="interrupt">
                               <setting name="IRQn" value="DAC1_IRQn"/>
                               <setting name="enable_interrrupt" value="enabled"/>

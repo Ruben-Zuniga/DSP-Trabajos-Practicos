@@ -74,8 +74,6 @@ instance:
       - 1: []
       - 2: []
       - 3: []
-      - 4: []
-      - 5: []
     - interrupts: []
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -239,12 +237,12 @@ instance:
         - enableAutoChannelIncrement: 'false'
         - loopCount: '0'
         - hardwareAverageMode: 'kLPADC_HardwareAverageCount1'
-        - sampleTimeMode: 'kLPADC_SampleTimeADCK131'
+        - sampleTimeMode: 'kLPADC_SampleTimeADCK3'
         - hardwareCompareMode: 'kLPADC_HardwareCompareDisabled'
         - hardwareCompareValueHigh: '0'
         - hardwareCompareValueLow: '0'
-        - conversionResoultuionMode: 'kLPADC_ConversionResolutionStandard'
-        - enableWaitTrigger: 'false'
+        - conversionResoultuionMode: 'kLPADC_ConversionResolutionHigh'
+        - enableWaitTrigger: 'true'
     - lpadcConvTriggerConfig:
       - 0:
         - user_triggerId: 'trig0'
@@ -256,12 +254,12 @@ instance:
         - channelBFIFOSelect: '0'
         - enableHardwareTrigger: 'true'
     - IRQ_cfg:
-      - interrupt_type: ''
-      - enable_irq: 'false'
+      - interrupt_type: 'kLPADC_Trigger0CompletionInterruptEnable'
+      - enable_irq: 'true'
       - adc_interrupt:
         - IRQn: 'ADC0_IRQn'
         - enable_interrrupt: 'enabled'
-        - enable_priority: 'false'
+        - enable_priority: 'true'
         - priority: '0'
         - enable_custom_name: 'false'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
@@ -289,12 +287,12 @@ lpadc_conv_command_config_t ADC0_commandsConfig[1] = {
     .enableAutoChannelIncrement = false,
     .loopCount = 0UL,
     .hardwareAverageMode = kLPADC_HardwareAverageCount1,
-    .sampleTimeMode = kLPADC_SampleTimeADCK131,
+    .sampleTimeMode = kLPADC_SampleTimeADCK3,
     .hardwareCompareMode = kLPADC_HardwareCompareDisabled,
     .hardwareCompareValueHigh = 0UL,
     .hardwareCompareValueLow = 0UL,
-    .conversionResolutionMode = kLPADC_ConversionResolutionStandard,
-    .enableWaitTrigger = false
+    .conversionResolutionMode = kLPADC_ConversionResolutionHigh,
+    .enableWaitTrigger = true
   }
 };
 lpadc_conv_trigger_config_t ADC0_triggersConfig[1] = {
@@ -319,6 +317,12 @@ static void ADC0_init(void) {
   LPADC_SetConvCommandConfig(ADC0_PERIPHERAL, ADC0_CMD0, &ADC0_commandsConfig[0]);
   /* Configure trigger 0. */
   LPADC_SetConvTriggerConfig(ADC0_PERIPHERAL, ADC0_TRIG0, &ADC0_triggersConfig[0]);
+  /* Interrupt vector ADC0_IRQn priority settings in the NVIC. */
+  NVIC_SetPriority(ADC0_IRQN, ADC0_IRQ_PRIORITY);
+  /* Enable interrupts from LPADC */
+  LPADC_EnableInterrupts(ADC0_PERIPHERAL, (kLPADC_Trigger0CompletionInterruptEnable));
+  /* Enable interrupt ADC0_IRQN request in the NVIC */
+  EnableIRQ(ADC0_IRQN);
 }
 
 /***********************************************************************************************************************
@@ -390,7 +394,7 @@ instance:
       - IRQn: 'GPIO01_IRQn'
       - enable_interrrupt: 'enabled'
       - enable_priority: 'true'
-      - priority: '0'
+      - priority: '1'
       - enable_custom_name: 'false'
     - enable_irq_EFT: 'false'
     - port_interrupt_EFT:
@@ -432,53 +436,47 @@ instance:
     - ctimerConfig:
       - mode: 'kCTIMER_TimerMode'
       - clockSource: 'FunctionClock'
-      - clockSourceFreq: 'custom:150 MHz'
-      - timerPrescaler: '6 MHz'
+      - clockSourceFreq: 'ClocksTool_DefaultInit'
+      - timerPrescaler: '125'
     - EnableTimerInInit: 'false'
     - matchChannels:
       - 0:
-        - matchChannelPrefixId: 'Match_0'
-        - matchChannel: 'kCTIMER_Match_0'
-        - matchValueStr: '8 kHz'
+        - matchChannelPrefixId: 'Match_3'
+        - matchChannel: 'kCTIMER_Match_3'
+        - matchValueStr: '16Khz'
         - enableCounterReset: 'true'
         - enableCounterStop: 'false'
-        - outControl: 'kCTIMER_Output_NoAction'
+        - outControl: 'kCTIMER_Output_Toggle'
         - outPinInitValue: 'low'
-        - enableInterrupt: 'true'
+        - enableInterrupt: 'false'
     - captureChannels: []
     - interruptCallbackConfig:
       - interrupt:
         - IRQn: 'CTIMER0_IRQn'
-        - enable_priority: 'true'
-        - priority: '3'
-      - callback: 'kCTIMER_SingleCallback'
-      - singleCallback: 'ctimer_match0_callback'
+        - enable_priority: 'false'
+        - priority: '2'
+      - callback: 'kCTIMER_NoCallback'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
 const ctimer_config_t CTIMER0_config = {
   .mode = kCTIMER_TimerMode,
   .input = kCTIMER_Capture_0,
-  .prescale = 24
+  .prescale = 124
 };
-const ctimer_match_config_t CTIMER0_Match_0_config = {
-  .matchValue = 749,
+const ctimer_match_config_t CTIMER0_Match_3_config = {
+  .matchValue = 74,
   .enableCounterReset = true,
   .enableCounterStop = false,
-  .outControl = kCTIMER_Output_NoAction,
+  .outControl = kCTIMER_Output_Toggle,
   .outPinInitState = false,
-  .enableInterrupt = true
+  .enableInterrupt = false
 };
-/* Single callback functions definition */
-ctimer_callback_t CTIMER0_callback[] = {ctimer_match0_callback};
 
 static void CTIMER0_init(void) {
   /* CTIMER0 peripheral initialization */
   CTIMER_Init(CTIMER0_PERIPHERAL, &CTIMER0_config);
-  /* Interrupt vector CTIMER0_IRQn priority settings in the NVIC. */
-  NVIC_SetPriority(CTIMER0_TIMER_IRQN, CTIMER0_TIMER_IRQ_PRIORITY);
-  /* Match channel 0 of CTIMER0 peripheral initialization */
-  CTIMER_SetupMatch(CTIMER0_PERIPHERAL, CTIMER0_MATCH_0_CHANNEL, &CTIMER0_Match_0_config);
-  CTIMER_RegisterCallBack(CTIMER0_PERIPHERAL, CTIMER0_callback, kCTIMER_SingleCallback);
+  /* Match channel 3 of CTIMER0 peripheral initialization */
+  CTIMER_SetupMatch(CTIMER0_PERIPHERAL, CTIMER0_MATCH_3_CHANNEL, &CTIMER0_Match_3_config);
 }
 
 /***********************************************************************************************************************
@@ -498,14 +496,14 @@ instance:
   - fsl_dac:
     - dac_config:
       - fifoWatermarkLevel: '0'
-      - fifoTriggerMode: 'kDAC_FIFOTriggerByHardwareMode'
+      - fifoTriggerMode: 'kDAC_FIFOTriggerBySoftwareMode'
       - fifoWorkMode: 'kDAC_FIFODisabled'
       - referenceVoltageSource: 'kDAC_ReferenceVoltageSourceAlt1'
       - referenceCurrentSource: 'kDAC_ReferenceCurrentSourcePtat'
       - enableOpampBuffer: 'true'
       - periodicTriggerNumber: '0'
       - periodicTriggerWidth: '0'
-      - syncTime: '1'
+      - syncTime: '0'
       - enableLowerLowPowerMode: 'true'
     - enable_dma: 'false'
     - dac_dma: 'kDAC_FIFOEmptyDMAEnable'
@@ -514,7 +512,7 @@ instance:
     - convert_value: '0'
     - interrupt_config:
       - dac_interrupts: ''
-      - enable_irq: 'true'
+      - enable_irq: 'false'
       - interrupt:
         - IRQn: 'DAC0_IRQn'
         - enable_interrrupt: 'enabled'
@@ -525,22 +523,18 @@ instance:
 /* clang-format on */
 const dac_config_t DAC0_config = {
   .fifoWatermarkLevel = 0UL,
-  .fifoTriggerMode = kDAC_FIFOTriggerByHardwareMode,
+  .fifoTriggerMode = kDAC_FIFOTriggerBySoftwareMode,
   .fifoWorkMode = kDAC_FIFODisabled,
   .referenceVoltageSource = kDAC_ReferenceVoltageSourceAlt1,
   .referenceCurrentSource = kDAC_ReferenceCurrentSourcePtat,
   .enableOpampBuffer = true,
   .periodicTriggerNumber = 0UL,
   .periodicTriggerWidth = 0UL,
-  .syncTime = 1UL,
+  .syncTime = 0UL,
   .enableLowerLowPowerMode = true,
 };
 
 static void DAC0_init(void) {
-  /* Enable interrupt DAC0_IRQN request in the NVIC */
-  EnableIRQ(DAC0_IRQN);
-  /* Interrupt vector DAC0_IRQn priority settings in the NVIC. */
-  NVIC_SetPriority(DAC0_IRQN, DAC0_IRQ_PRIORITY);
   /* Power up analog module in SPC */
   SPC_EnableActiveModeAnalogModules(SPC0, kSPC_controlDac0);
   /* Initialize the LPDAC */
@@ -570,13 +564,13 @@ instance:
       - mode: 'kCTIMER_TimerMode'
       - clockSource: 'FunctionClock'
       - clockSourceFreq: 'ClocksTool_DefaultInit'
-      - timerPrescaler: '25.6 MHz'
+      - timerPrescaler: '15'
     - EnableTimerInInit: 'false'
     - matchChannels:
       - 0:
         - matchChannelPrefixId: 'Match_0'
         - matchChannel: 'kCTIMER_Match_0'
-        - matchValueStr: '2.56 kHz'
+        - matchValueStr: '5 kHz'
         - enableCounterReset: 'true'
         - enableCounterStop: 'false'
         - outControl: 'kCTIMER_Output_NoAction'
@@ -595,10 +589,10 @@ instance:
 const ctimer_config_t CTIMER1_config = {
   .mode = kCTIMER_TimerMode,
   .input = kCTIMER_Capture_0,
-  .prescale = 4
+  .prescale = 14
 };
 const ctimer_match_config_t CTIMER1_Match_0_config = {
-  .matchValue = 11717,
+  .matchValue = 1999,
   .enableCounterReset = true,
   .enableCounterStop = false,
   .outControl = kCTIMER_Output_NoAction,
@@ -635,14 +629,14 @@ instance:
   - fsl_dac:
     - dac_config:
       - fifoWatermarkLevel: '0'
-      - fifoTriggerMode: 'kDAC_FIFOTriggerByHardwareMode'
+      - fifoTriggerMode: 'kDAC_FIFOTriggerBySoftwareMode'
       - fifoWorkMode: 'kDAC_FIFODisabled'
       - referenceVoltageSource: 'kDAC_ReferenceVoltageSourceAlt1'
       - referenceCurrentSource: 'kDAC_ReferenceCurrentSourcePtat'
       - enableOpampBuffer: 'true'
       - periodicTriggerNumber: '0'
       - periodicTriggerWidth: '0'
-      - syncTime: '1'
+      - syncTime: '0'
       - enableLowerLowPowerMode: 'true'
     - enable_dma: 'false'
     - dac_dma: 'kDAC_FIFOEmptyDMAEnable'
@@ -651,7 +645,7 @@ instance:
     - convert_value: '0'
     - interrupt_config:
       - dac_interrupts: ''
-      - enable_irq: 'true'
+      - enable_irq: 'false'
       - interrupt:
         - IRQn: 'DAC1_IRQn'
         - enable_interrrupt: 'enabled'
@@ -662,22 +656,18 @@ instance:
 /* clang-format on */
 const dac_config_t DAC1_config = {
   .fifoWatermarkLevel = 0UL,
-  .fifoTriggerMode = kDAC_FIFOTriggerByHardwareMode,
+  .fifoTriggerMode = kDAC_FIFOTriggerBySoftwareMode,
   .fifoWorkMode = kDAC_FIFODisabled,
   .referenceVoltageSource = kDAC_ReferenceVoltageSourceAlt1,
   .referenceCurrentSource = kDAC_ReferenceCurrentSourcePtat,
   .enableOpampBuffer = true,
   .periodicTriggerNumber = 0UL,
   .periodicTriggerWidth = 0UL,
-  .syncTime = 1UL,
+  .syncTime = 0UL,
   .enableLowerLowPowerMode = true,
 };
 
 static void DAC1_init(void) {
-  /* Enable interrupt DAC1_IRQN request in the NVIC */
-  EnableIRQ(DAC1_IRQN);
-  /* Interrupt vector DAC1_IRQn priority settings in the NVIC. */
-  NVIC_SetPriority(DAC1_IRQN, DAC1_IRQ_PRIORITY);
   /* Power up analog module in SPC */
   SPC_EnableActiveModeAnalogModules(SPC0, kSPC_controlDac1);
   /* Initialize the LPDAC */

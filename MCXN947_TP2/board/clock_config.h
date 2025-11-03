@@ -400,11 +400,11 @@ void BOARD_BootClockFROHF144M(void);
 /*******************************************************************************
  * Definitions for BOARD_BootClockPLL150M configuration
  ******************************************************************************/
-#define BOARD_BOOTCLOCKPLL150M_CORE_CLOCK         150000000U  /*!< Core clock frequency: 150000000Hz */
+#define BOARD_BOOTCLOCKPLL150M_CORE_CLOCK                 0U  /*!< Core clock frequency: 0Hz */
 #define BOARD_BOOTCLOCKPLL150M_ROSC_CLOCK                 0U  /*!< ROSC clock frequency: 0Hz */
 
 /* Clock outputs (values are in Hz): */
-#define BOARD_BOOTCLOCKPLL150M_ADC0_CLOCK             48000000UL     /* Clock consumers of ADC0_clock output : ADC0 */
+#define BOARD_BOOTCLOCKPLL150M_ADC0_CLOCK             50000000UL     /* Clock consumers of ADC0_clock output : ADC0 */
 #define BOARD_BOOTCLOCKPLL150M_ADC1_CLOCK             0UL            /* Clock consumers of ADC1_clock output : ADC1 */
 #define BOARD_BOOTCLOCKPLL150M_CLK16K0_TOVBAT_CLOCK   0UL            /* Clock consumers of CLK16K0_toVBAT_clock output : N/A */
 #define BOARD_BOOTCLOCKPLL150M_CLK16K1_TOVSYS_CLOCK   0UL            /* Clock consumers of CLK16K1_toVSYS_clock output : CMP0, CMP1, CMP2, LPTMR0, LPTMR1 */
@@ -421,13 +421,13 @@ void BOARD_BootClockFROHF144M(void);
 #define BOARD_BOOTCLOCKPLL150M_CMP1RRDIV_CLOCK        0UL            /* Clock consumers of CMP1RRDIV_clock output : CMP1 */
 #define BOARD_BOOTCLOCKPLL150M_CMP2FDIV_CLOCK         0UL            /* Clock consumers of CMP2FDIV_clock output : CMP2 */
 #define BOARD_BOOTCLOCKPLL150M_CMP2RRDIV_CLOCK        0UL            /* Clock consumers of CMP2RRDIV_clock output : CMP2 */
-#define BOARD_BOOTCLOCKPLL150M_CTIMER0_CLOCK          6000000UL      /* Clock consumers of CTIMER0_clock output : CTIMER0 */
+#define BOARD_BOOTCLOCKPLL150M_CTIMER0_CLOCK          150000000UL    /* Clock consumers of CTIMER0_clock output : CTIMER0 */
 #define BOARD_BOOTCLOCKPLL150M_CTIMER1_CLOCK          150000000UL    /* Clock consumers of CTIMER1_clock output : CTIMER1 */
 #define BOARD_BOOTCLOCKPLL150M_CTIMER2_CLOCK          0UL            /* Clock consumers of CTIMER2_clock output : CTIMER2 */
 #define BOARD_BOOTCLOCKPLL150M_CTIMER3_CLOCK          0UL            /* Clock consumers of CTIMER3_clock output : CTIMER3 */
 #define BOARD_BOOTCLOCKPLL150M_CTIMER4_CLOCK          0UL            /* Clock consumers of CTIMER4_clock output : CTIMER4 */
-#define BOARD_BOOTCLOCKPLL150M_DAC0_CLOCK             48000000UL     /* Clock consumers of DAC0_clock output : DAC0 */
-#define BOARD_BOOTCLOCKPLL150M_DAC1_CLOCK             0UL            /* Clock consumers of DAC1_clock output : DAC1 */
+#define BOARD_BOOTCLOCKPLL150M_DAC0_CLOCK             50000000UL     /* Clock consumers of DAC0_clock output : DAC0 */
+#define BOARD_BOOTCLOCKPLL150M_DAC1_CLOCK             50000000UL     /* Clock consumers of DAC1_clock output : DAC1 */
 #define BOARD_BOOTCLOCKPLL150M_DAC2_CLOCK             0UL            /* Clock consumers of DAC2_clock output : DAC2 */
 #define BOARD_BOOTCLOCKPLL150M_EMVSIM0_CLOCK          0UL            /* Clock consumers of EMVSIM0_clock output : EMVSIM0 */
 #define BOARD_BOOTCLOCKPLL150M_EMVSIM1_CLOCK          0UL            /* Clock consumers of EMVSIM1_clock output : EMVSIM1 */
@@ -460,7 +460,7 @@ void BOARD_BootClockFROHF144M(void);
 #define BOARD_BOOTCLOCKPLL150M_I3C1_SLOW_TC_CLOCK     0UL            /* Clock consumers of I3C1_SLOW_TC_clock output : I3C1 */
 #define BOARD_BOOTCLOCKPLL150M_I3C1_SLOW_CLOCK        0UL            /* Clock consumers of I3C1_SLOW_clock output : I3C1 */
 #define BOARD_BOOTCLOCKPLL150M_LP_OSC_CLOCK           0UL            /* Clock consumers of LP_OSC_clock output : RTC0, TDET0, WUU0 */
-#define BOARD_BOOTCLOCKPLL150M_MAIN_CLOCK             150000000UL    /* Clock consumers of MAIN_clock output : N/A */
+#define BOARD_BOOTCLOCKPLL150M_MAIN_CLOCK             0UL            /* Clock consumers of MAIN_clock output : N/A */
 #define BOARD_BOOTCLOCKPLL150M_MICFILFCLK_CLOCK       0UL            /* Clock consumers of MICFILFCLK_clock output : PDM */
 #define BOARD_BOOTCLOCKPLL150M_OSTIMER_CLOCK          0UL            /* Clock consumers of OSTIMER_clock output : OSTIMER0 */
 #define BOARD_BOOTCLOCKPLL150M_PLL0_CLK_CLOCK         150000000UL    /* Clock consumers of PLL0_CLK_clock output : N/A */
@@ -477,8 +477,8 @@ void BOARD_BootClockFROHF144M(void);
 #define BOARD_BOOTCLOCKPLL150M_SINCFILT_CLOCK         0UL            /* Clock consumers of SINCFILT_clock output : SINC0 */
 #define BOARD_BOOTCLOCKPLL150M_SYSTICK0_CLOCK         0UL            /* Clock consumers of SYSTICK0_clock output : SysTick0 */
 #define BOARD_BOOTCLOCKPLL150M_SYSTICK1_CLOCK         0UL            /* Clock consumers of SYSTICK1_clock output : SysTick1 */
-#define BOARD_BOOTCLOCKPLL150M_SLOW_CLOCK             37500000UL     /* Clock consumers of Slow_clock output : CMC0, CMP0, CMP1, GPIO5, LPTMR0, LPTMR1, PORT5, RTC0, SPC0, TDET0, TSI0 */
-#define BOARD_BOOTCLOCKPLL150M_SYSTEM_CLOCK           150000000UL    /* Clock consumers of System_clock output : ADC0, ADC1, CACHE64_CTRL0, CACHE64_POLSEL0, CAN0, CAN1, CMP2, CMX_PERFMON0, CMX_PERFMON1, CTIMER0, CTIMER1, CTIMER2, CTIMER3, CTIMER4, DAC0, DAC1, DAC2, DMA0, DMA1, EMVSIM0, EMVSIM1, ENET0, EVTG0, EWM0, FLEXIO0, FLEXSPI0, FREQME0, GDET0, GDET1, GPIO0, GPIO0_ALIAS1, GPIO1, GPIO1_ALIAS1, GPIO2, GPIO2_ALIAS1, GPIO3, GPIO3_ALIAS1, GPIO4, GPIO4_ALIAS1, GPIO5_ALIAS1, I3C0, I3C1, INTM0, LPI2C0, LPI2C1, LPI2C2, LPI2C3, LPI2C4, LPI2C5, LPI2C6, LPI2C7, LPI2C8, LPI2C9, LPSPI0, LPSPI1, LPSPI2, LPSPI3, LPSPI4, LPSPI5, LPSPI6, LPSPI7, LPSPI8, LPSPI9, LPUART0, LPUART1, LPUART2, LPUART3, LPUART4, LPUART5, LPUART6, LPUART7, LPUART8, LPUART9, LP_FLEXCOMM0, LP_FLEXCOMM1, LP_FLEXCOMM2, LP_FLEXCOMM3, LP_FLEXCOMM4, LP_FLEXCOMM5, LP_FLEXCOMM6, LP_FLEXCOMM7, LP_FLEXCOMM8, LP_FLEXCOMM9, MAILBOX, MRT0, OSTIMER0, PDM, PLU0, PORT0, PORT1, PORT2, PORT3, PORT4, POWERQUAD, PUF, PUF_ALIAS1, PUF_ALIAS2, PUF_ALIAS3, PWM0, PWM1, QDC0, QDC1, SAI0, SAI1, SCT0, SINC0, SWD, SysTick0, SysTick1, USBFS0, USBHS1_PHY_DCD, USDHC0, UTICK0, WUU0, WWDT0, WWDT1 */
+#define BOARD_BOOTCLOCKPLL150M_SLOW_CLOCK             0UL            /* Clock consumers of Slow_clock output : CMC0, CMP0, CMP1, GPIO5, LPTMR0, LPTMR1, PORT5, RTC0, SPC0, TDET0, TSI0 */
+#define BOARD_BOOTCLOCKPLL150M_SYSTEM_CLOCK           0UL            /* Clock consumers of System_clock output : ADC0, ADC1, CACHE64_CTRL0, CACHE64_POLSEL0, CAN0, CAN1, CMP2, CMX_PERFMON0, CMX_PERFMON1, CTIMER0, CTIMER1, CTIMER2, CTIMER3, CTIMER4, DAC0, DAC1, DAC2, DMA0, DMA1, EMVSIM0, EMVSIM1, ENET0, EVTG0, EWM0, FLEXIO0, FLEXSPI0, FREQME0, GDET0, GDET1, GPIO0, GPIO0_ALIAS1, GPIO1, GPIO1_ALIAS1, GPIO2, GPIO2_ALIAS1, GPIO3, GPIO3_ALIAS1, GPIO4, GPIO4_ALIAS1, GPIO5_ALIAS1, I3C0, I3C1, INTM0, LPI2C0, LPI2C1, LPI2C2, LPI2C3, LPI2C4, LPI2C5, LPI2C6, LPI2C7, LPI2C8, LPI2C9, LPSPI0, LPSPI1, LPSPI2, LPSPI3, LPSPI4, LPSPI5, LPSPI6, LPSPI7, LPSPI8, LPSPI9, LPUART0, LPUART1, LPUART2, LPUART3, LPUART4, LPUART5, LPUART6, LPUART7, LPUART8, LPUART9, LP_FLEXCOMM0, LP_FLEXCOMM1, LP_FLEXCOMM2, LP_FLEXCOMM3, LP_FLEXCOMM4, LP_FLEXCOMM5, LP_FLEXCOMM6, LP_FLEXCOMM7, LP_FLEXCOMM8, LP_FLEXCOMM9, MAILBOX, MRT0, OSTIMER0, PDM, PLU0, PORT0, PORT1, PORT2, PORT3, PORT4, POWERQUAD, PUF, PUF_ALIAS1, PUF_ALIAS2, PUF_ALIAS3, PWM0, PWM1, QDC0, QDC1, SAI0, SAI1, SCT0, SINC0, SWD, SysTick0, SysTick1, USBFS0, USBHS1_PHY_DCD, USDHC0, UTICK0, WUU0, WWDT0, WWDT1 */
 #define BOARD_BOOTCLOCKPLL150M_TRACE_CLOCK            0UL            /* Clock consumers of TRACE_clock output : SWD */
 #define BOARD_BOOTCLOCKPLL150M_TSI_CLOCK              0UL            /* Clock consumers of TSI_clock output : TSI0 */
 #define BOARD_BOOTCLOCKPLL150M_USB_HSPLL_CLOCK        0UL            /* Clock consumers of USB_HSPLL_clock output : USBHS1_PHY_DCD */
