@@ -1100,7 +1100,6 @@
                            <struct name="1"/>
                            <struct name="2"/>
                            <struct name="3"/>
-                           <struct name="4"/>
                         </array>
                         <array name="interrupts"/>
                      </config_set>
@@ -1277,7 +1276,7 @@
                            <setting name="mode" value="kCTIMER_TimerMode"/>
                            <setting name="clockSource" value="FunctionClock"/>
                            <setting name="clockSourceFreq" value="ClocksTool_DefaultInit"/>
-                           <setting name="timerPrescaler" value="1"/>
+                           <setting name="timerPrescaler" value="125"/>
                         </struct>
                         <setting name="EnableTimerInInit" value="false"/>
                         <array name="matchChannels">
@@ -1289,14 +1288,14 @@
                               <setting name="enableCounterStop" value="false"/>
                               <setting name="outControl" value="kCTIMER_Output_Toggle"/>
                               <setting name="outPinInitValue" value="low"/>
-                              <setting name="enableInterrupt" value="true"/>
+                              <setting name="enableInterrupt" value="false"/>
                            </struct>
                         </array>
                         <array name="captureChannels"/>
                         <struct name="interruptCallbackConfig">
                            <struct name="interrupt">
                               <setting name="IRQn" value="CTIMER0_IRQn"/>
-                              <setting name="enable_priority" value="true"/>
+                              <setting name="enable_priority" value="false"/>
                               <setting name="priority" value="2"/>
                            </struct>
                            <setting name="callback" value="kCTIMER_NoCallback"/>
@@ -1343,14 +1342,14 @@
                            <setting name="mode" value="kCTIMER_TimerMode"/>
                            <setting name="clockSource" value="FunctionClock"/>
                            <setting name="clockSourceFreq" value="ClocksTool_DefaultInit"/>
-                           <setting name="timerPrescaler" value="1"/>
+                           <setting name="timerPrescaler" value="15"/>
                         </struct>
                         <setting name="EnableTimerInInit" value="false"/>
                         <array name="matchChannels">
                            <struct name="0">
                               <setting name="matchChannelPrefixId" value="Match_0"/>
                               <setting name="matchChannel" value="kCTIMER_Match_0"/>
-                              <setting name="matchValueStr" value="5000 kHz"/>
+                              <setting name="matchValueStr" value="50 kHz"/>
                               <setting name="enableCounterReset" value="true"/>
                               <setting name="enableCounterStop" value="false"/>
                               <setting name="outControl" value="kCTIMER_Output_NoAction"/>

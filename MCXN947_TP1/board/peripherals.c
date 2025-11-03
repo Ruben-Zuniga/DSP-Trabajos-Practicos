@@ -74,7 +74,6 @@ instance:
       - 1: []
       - 2: []
       - 3: []
-      - 4: []
     - interrupts: []
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -436,7 +435,7 @@ instance:
       - mode: 'kCTIMER_TimerMode'
       - clockSource: 'FunctionClock'
       - clockSourceFreq: 'ClocksTool_DefaultInit'
-      - timerPrescaler: '1'
+      - timerPrescaler: '125'
     - EnableTimerInInit: 'false'
     - matchChannels:
       - 0:
@@ -447,12 +446,12 @@ instance:
         - enableCounterStop: 'false'
         - outControl: 'kCTIMER_Output_Toggle'
         - outPinInitValue: 'low'
-        - enableInterrupt: 'true'
+        - enableInterrupt: 'false'
     - captureChannels: []
     - interruptCallbackConfig:
       - interrupt:
         - IRQn: 'CTIMER0_IRQn'
-        - enable_priority: 'true'
+        - enable_priority: 'false'
         - priority: '2'
       - callback: 'kCTIMER_NoCallback'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
@@ -460,22 +459,20 @@ instance:
 const ctimer_config_t CTIMER0_config = {
   .mode = kCTIMER_TimerMode,
   .input = kCTIMER_Capture_0,
-  .prescale = 0
+  .prescale = 124
 };
 const ctimer_match_config_t CTIMER0_Match_3_config = {
-  .matchValue = 3124,
+  .matchValue = 24,
   .enableCounterReset = true,
   .enableCounterStop = false,
   .outControl = kCTIMER_Output_Toggle,
   .outPinInitState = false,
-  .enableInterrupt = true
+  .enableInterrupt = false
 };
 
 static void CTIMER0_init(void) {
   /* CTIMER0 peripheral initialization */
   CTIMER_Init(CTIMER0_PERIPHERAL, &CTIMER0_config);
-  /* Interrupt vector CTIMER0_IRQn priority settings in the NVIC. */
-  NVIC_SetPriority(CTIMER0_TIMER_IRQN, CTIMER0_TIMER_IRQ_PRIORITY);
   /* Match channel 3 of CTIMER0 peripheral initialization */
   CTIMER_SetupMatch(CTIMER0_PERIPHERAL, CTIMER0_MATCH_3_CHANNEL, &CTIMER0_Match_3_config);
 }
@@ -565,13 +562,13 @@ instance:
       - mode: 'kCTIMER_TimerMode'
       - clockSource: 'FunctionClock'
       - clockSourceFreq: 'ClocksTool_DefaultInit'
-      - timerPrescaler: '1'
+      - timerPrescaler: '15'
     - EnableTimerInInit: 'false'
     - matchChannels:
       - 0:
         - matchChannelPrefixId: 'Match_0'
         - matchChannel: 'kCTIMER_Match_0'
-        - matchValueStr: '5000 kHz'
+        - matchValueStr: '50 kHz'
         - enableCounterReset: 'true'
         - enableCounterStop: 'false'
         - outControl: 'kCTIMER_Output_NoAction'
@@ -590,10 +587,10 @@ instance:
 const ctimer_config_t CTIMER1_config = {
   .mode = kCTIMER_TimerMode,
   .input = kCTIMER_Capture_0,
-  .prescale = 0
+  .prescale = 14
 };
 const ctimer_match_config_t CTIMER1_Match_0_config = {
-  .matchValue = 29,
+  .matchValue = 199,
   .enableCounterReset = true,
   .enableCounterStop = false,
   .outControl = kCTIMER_Output_NoAction,

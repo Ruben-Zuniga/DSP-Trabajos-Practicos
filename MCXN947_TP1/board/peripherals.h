@@ -62,17 +62,13 @@ extern "C" {
 /* Definition of peripheral ID */
 #define CTIMER0_PERIPHERAL CTIMER0
 /* Timer tick frequency in Hz (input frequency of the timer) */
-#define CTIMER0_TICK_FREQ 150000000UL
+#define CTIMER0_TICK_FREQ 1200000UL
 /* Timer tick period in ns (input period of the timer) */
-#define CTIMER0_TICK_PERIOD 7UL
+#define CTIMER0_TICK_PERIOD 833UL
 /* Definition of PWM period channel. */
 #define CTIMER0_PWM_PERIOD_CH kCTIMER_Match_0
 /* Definition of channel 3 ID */
 #define CTIMER0_MATCH_3_CHANNEL kCTIMER_Match_3
-/* CTIMER0 interrupt vector ID (number). */
-#define CTIMER0_TIMER_IRQN CTIMER0_IRQn
-/* CTIMER0 interrupt vector priority. */
-#define CTIMER0_TIMER_IRQ_PRIORITY 2
 /* BOARD_InitPeripherals defines for DAC0 */
 /* Definition of peripheral ID */
 #define DAC0_PERIPHERAL DAC0
@@ -83,9 +79,9 @@ extern "C" {
 /* Definition of peripheral ID */
 #define CTIMER1_PERIPHERAL CTIMER1
 /* Timer tick frequency in Hz (input frequency of the timer) */
-#define CTIMER1_TICK_FREQ 150000000UL
+#define CTIMER1_TICK_FREQ 10000000UL
 /* Timer tick period in ns (input period of the timer) */
-#define CTIMER1_TICK_PERIOD 7UL
+#define CTIMER1_TICK_PERIOD 100UL
 /* Definition of PWM period channel. */
 #define CTIMER1_PWM_PERIOD_CH kCTIMER_Match_0
 /* Definition of channel 0 ID */

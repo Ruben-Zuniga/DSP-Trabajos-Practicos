@@ -1,5 +1,12 @@
 /*
  Trabajo Practico 1: PROGRAMA PRINCIPAL
+
+ PINES:
+ 	 ADC0: J4.2
+ 	 DAC0: J1.4
+ 	 DAC1: J1.2
+ 	 MATCH0: J7.1 o J2.13
+ 	 GND: J5.8 o J6.8
  */
 #include "board.h"
 #include "peripherals.h"
@@ -30,10 +37,10 @@ const uint32_t sample_rates[] = {8000, 16000, 22000, 44000, 48000}; // frecuenci
 #define SW3_PIN   6   // PIO0_6
 
 // Frecuencia del CTIMER
-#define CTIMER_CLK_FREQ 150e6 // 150 MHz
+#define CTIMER_CLK_FREQ 1.2e6 // 1.2 MHz
 
 // Seno del DAC1
-#define SINE_POINTS   1000          // cantidad de muestras por ciclo
+#define SINE_POINTS   100          // cantidad de muestras por ciclo
 
 #define BOARD_LED_RED_GPIO GPIO0
 #define BOARD_LED_RED_PIN 10
@@ -61,15 +68,20 @@ static ctimer_match_config_t ctimerMatchConfig = {
   .matchValue = 749,
   .enableCounterReset = true,
   .enableCounterStop = false,
-  .outControl = kCTIMER_Output_NoAction,
+  .outControl = kCTIMER_Output_Toggle,
   .outPinInitState = false,
-  .enableInterrupt = true
+  .enableInterrupt = false
 };
 
 static lpadc_conv_result_t mLpadc_resultConfigStruct;
 
 static uint32_t sine_table[SINE_POINTS];   // tabla de seno
 static uint32_t sine_index = 0;            // índice actual en la tabla
+
+// Hardcodeo handler de TIMER 0
+void CTIMER0_IRQHandler(void){
+
+}
 
 // ---- LED RGB según frecuencia ----
 static void UpdateLedColor(uint8_t idx)
@@ -122,28 +134,6 @@ void ADC0_IRQHANDLER(void) {
 	DAC_SetData(DAC0, adc_val >> 4);
 }
 
-
-//// ---- ISR del Timer ----
-//void ctimer_match0_callback(uint32_t flags)
-//{
-//
-//    LPADC_DoSoftwareTrigger(ADC0, 1U); /* 1U is trigger0 mask. */
-//    while(!LPADC_GetConvResult(ADC0, &mLpadc_resultConfigStruct, 0U)){
-//    }
-//	uint16_t adc_val = (mLpadc_resultConfigStruct.convValue >> 4);
-//
-////	//if (!adc_run) return;
-// Conversión a Q15 [-32768,32767]
-//	q15_t q15_val = ((int32_t)adc_val - 2048) << 4;
-//	adc_buffer[buf_index] = q15_val;
-//
-//	// Buffer circular
-//	buf_index = (buf_index + 1) % BUFFER_SIZE;
-//
-//	// Enviar al DAC
-//	DAC_SetData(DAC0, adc_val);
-//}
-
 // ---- Callback de CTIMER1: genera seno ----
 void ctimer1_match0_callback(uint32_t flags)
 {
@@ -191,9 +181,6 @@ void GPIO0_INT_1_IRQHANDLER(void)
         // matchValue depende de la frecuencia de muestreo
         ctimerMatchConfig.matchValue = CTIMER_CLK_FREQ / sample_rates[sample_rate_idx];
 
-//        CTIMER_SetShadowValue(CTIMER0, kCTIMER_Match_3, ctimerMatchConfig.matchValue);
-
-//        NO FUNCIONA
         CTIMER_SetupMatch(CTIMER0, kCTIMER_Match_3, &ctimerMatchConfig);
 
         UpdateLedColor(sample_rate_idx);
@@ -231,8 +218,12 @@ int main(void)
 
     UpdateLedColor(sample_rate_idx);
     GenerateSineTable();
+
     CTIMER_StartTimer(CTIMER1);
     CTIMER_StartTimer(CTIMER0);
+
+    PRINTF("Timer 1 status: %d \r\n", CTIMER1->TCR);
+    PRINTF("Timer 0 status: %d \r\n", CTIMER0->TCR);
 
     while (1) {
         // El trabajo lo hacen las interrupciones

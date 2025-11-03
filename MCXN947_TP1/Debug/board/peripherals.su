@@ -9,9 +9,9 @@
 ../board/peripherals.c:309:13:ADC0_init	8	static
 ../board/peripherals.c:361:13:VREF0_init	8	static
 ../board/peripherals.c:407:13:GPIO0_init	8	static
-../board/peripherals.c:474:13:CTIMER0_init	8	static
-../board/peripherals.c:536:13:DAC0_init	8	static
-../board/peripherals.c:604:13:CTIMER1_init	8	static
-../board/peripherals.c:669:13:DAC1_init	8	static
-../board/peripherals.c:683:6:BOARD_InitPeripherals	8	static
-../board/peripherals.c:699:6:BOARD_InitBootPeripherals	8	static
+../board/peripherals.c:473:13:CTIMER0_init	8	static
+../board/peripherals.c:535:13:DAC0_init	8	static
+../board/peripherals.c:603:13:CTIMER1_init	8	static
+../board/peripherals.c:668:13:DAC1_init	8	static
+../board/peripherals.c:682:6:BOARD_InitPeripherals	8	static
+../board/peripherals.c:698:6:BOARD_InitBootPeripherals	8	static
