@@ -122,7 +122,7 @@ static void PQ_FIRFixed16Example(void){
 	static uint32_t oldTime;
     pq_config_t pqConfig;
 
-    /* Initialize the filter. */
+    /* Initialize the filter. HACERLO EN EL MAIN */
     for (i = 0; i < TAPS_SIZE; i++)
     {
         tap[i] = (int16_t)s_firTaps[i];
@@ -274,6 +274,7 @@ int main(void)
 
     UpdateLedColor(sample_rate_idx);
     GenerateSineTable();
+//    TODO: MULTIPLICAR ACA EL ARRAY DE COEFICIENTES DEL FIR POR 2^15 PARA PASARLOS A Q15
 
     CTIMER_StartTimer(CTIMER1);
     CTIMER_StartTimer(CTIMER0);
