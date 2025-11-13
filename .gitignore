@@ -15,8 +15,3 @@ MCXN947_TP1/Debug/
 
 # Backup
 MCXN947_TP1_2/
-
-# Configuracion del MCUXpresso
-.mcuxpressoide_packages_support/
-.metadata/
-.project
