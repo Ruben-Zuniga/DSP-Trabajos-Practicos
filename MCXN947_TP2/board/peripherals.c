@@ -679,6 +679,52 @@ static void DAC1_init(void) {
 }
 
 /***********************************************************************************************************************
+ * POWERQUAD initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'POWERQUAD'
+- type: 'powerquad'
+- mode: 'general'
+- custom_name_enabled: 'false'
+- type_id: 'powerquad_2.1.0'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'POWERQUAD'
+- config_sets:
+  - fsl_powerquad:
+    - powerQuadConfig:
+      - inputAFormat: 'kPQ_16Bit'
+      - inputAPrescale: '0'
+      - inputBFormat: 'kPQ_16Bit'
+      - inputBPrescale: '0'
+      - outputFormat: 'kPQ_16Bit'
+      - outputPrescale: '0'
+      - tmpFormat: 'kPQ_Float'
+      - tmpPrescale: '0'
+      - machineFormat: 'kPQ_Float'
+      - tmpBaseValue: '0xE0000000UL'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+const pq_config_t POWERQUAD_config = {
+  .inputAFormat = kPQ_16Bit,
+  .inputAPrescale = 0,
+  .inputBFormat = kPQ_16Bit,
+  .inputBPrescale = 0,
+  .outputFormat = kPQ_16Bit,
+  .outputPrescale = 0,
+  .tmpFormat = kPQ_Float,
+  .tmpPrescale = 0,
+  .machineFormat = kPQ_Float,
+  .tmpBase = (uint32_t *)0xE0000000UL
+};
+
+static void POWERQUAD_init(void) {
+  PQ_Init(POWERQUAD_PERIPHERAL);
+  PQ_SetConfig(POWERQUAD_PERIPHERAL, &POWERQUAD_config);
+}
+
+/***********************************************************************************************************************
  * Initialization functions
  **********************************************************************************************************************/
 void BOARD_InitPeripherals(void)
@@ -692,6 +738,7 @@ void BOARD_InitPeripherals(void)
   DAC0_init();
   CTIMER1_init();
   DAC1_init();
+  POWERQUAD_init();
 }
 
 /***********************************************************************************************************************

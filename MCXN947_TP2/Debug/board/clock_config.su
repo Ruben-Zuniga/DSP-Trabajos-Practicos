@@ -1,4 +1,4 @@
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_clock.h:1488:20:CLOCK_EnableClock	24	static
+C:\workspace\MCXN947_TP2\drivers/fsl_clock.h:1488:20:CLOCK_EnableClock	24	static
 ../board/clock_config.c:47:6:BOARD_InitBootClocks	8	static
 ../board/clock_config.c:84:6:BOARD_BootClockFRO12M	24	static
 ../board/clock_config.c:153:6:BOARD_BootClockFROHF48M	24	static

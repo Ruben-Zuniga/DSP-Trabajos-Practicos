@@ -2,20 +2,20 @@ CMSIS/DSP/Source/WindowFunctions/WindowFunctions.o \
  CMSIS/DSP/Source/WindowFunctions/WindowFunctions.d: \
  ../CMSIS/DSP/Source/WindowFunctions/WindowFunctions.c \
  ../CMSIS/DSP/Source/WindowFunctions/arm_welch_f32.c \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/window_functions.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_types.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/cmsis_compiler.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/cmsis_gcc.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_memory.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_types.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/none.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/utils.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/window_functions.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types.h \
+ C:\workspace\MCXN947_TP2\CMSIS/cmsis_compiler.h \
+ C:\workspace\MCXN947_TP2\CMSIS/cmsis_gcc.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_memory.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/none.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/utils.h \
  ../CMSIS/DSP/Source/WindowFunctions/arm_welch_f64.c \
  ../CMSIS/DSP/Source/WindowFunctions/arm_bartlett_f32.c \
  ../CMSIS/DSP/Source/WindowFunctions/arm_bartlett_f64.c \
  ../CMSIS/DSP/Source/WindowFunctions/arm_hamming_f32.c \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/fast_math_functions.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/basic_math_functions.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/fast_math_functions.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/basic_math_functions.h \
  ../CMSIS/DSP/Source/WindowFunctions/arm_hamming_f64.c \
  ../CMSIS/DSP/Source/WindowFunctions/arm_hanning_f32.c \
  ../CMSIS/DSP/Source/WindowFunctions/arm_hanning_f64.c \
@@ -52,20 +52,20 @@ CMSIS/DSP/Source/WindowFunctions/WindowFunctions.o \
  ../CMSIS/DSP/Source/WindowFunctions/arm_hft248d_f32.c \
  ../CMSIS/DSP/Source/WindowFunctions/arm_hft248d_f64.c
 ../CMSIS/DSP/Source/WindowFunctions/arm_welch_f32.c:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/window_functions.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_types.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/cmsis_compiler.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/cmsis_gcc.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_memory.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_types.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/none.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/utils.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/window_functions.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types.h:
+C:\workspace\MCXN947_TP2\CMSIS/cmsis_compiler.h:
+C:\workspace\MCXN947_TP2\CMSIS/cmsis_gcc.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_memory.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/none.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/utils.h:
 ../CMSIS/DSP/Source/WindowFunctions/arm_welch_f64.c:
 ../CMSIS/DSP/Source/WindowFunctions/arm_bartlett_f32.c:
 ../CMSIS/DSP/Source/WindowFunctions/arm_bartlett_f64.c:
 ../CMSIS/DSP/Source/WindowFunctions/arm_hamming_f32.c:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/fast_math_functions.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/basic_math_functions.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/fast_math_functions.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/basic_math_functions.h:
 ../CMSIS/DSP/Source/WindowFunctions/arm_hamming_f64.c:
 ../CMSIS/DSP/Source/WindowFunctions/arm_hanning_f32.c:
 ../CMSIS/DSP/Source/WindowFunctions/arm_hanning_f64.c:

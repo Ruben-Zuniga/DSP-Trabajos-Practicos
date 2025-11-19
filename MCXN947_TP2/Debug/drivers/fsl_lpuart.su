@@ -1,4 +1,4 @@
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/core_cm33.h:2358:22:__NVIC_EnableIRQ	16	static
+C:\workspace\MCXN947_TP2\CMSIS/core_cm33.h:2358:22:__NVIC_EnableIRQ	16	static
 ../drivers/fsl_common_arm.h:672:24:EnableIRQ	24	static
 ../drivers/fsl_common_arm.h:902:24:DisableGlobalIRQ	16	static
 ../drivers/fsl_common_arm.h:928:20:EnableGlobalIRQ	24	static

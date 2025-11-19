@@ -26,8 +26,6 @@
 const uint32_t sample_rates[] = {8000, 16000, 22000, 44000, 48000}; // frecuencias de muestreo
 //const uint32_t sample_rates[] = {1, 2, 4, 8, 16}; // frecuencias de muestreo
 
-#define BUFFER_SIZE   512
-
 #define NUM_RATES (sizeof(sample_rates)/sizeof(sample_rates[0])) // tamaño del arreglo
 // NUM_RATES se define de esta forma para poder obtener el tamaño del arreglo sin importar el
 // tipo de numero (en este caso uint32_t) ni la cantidad de numeros del arreglo (en este caso 5)
@@ -40,7 +38,9 @@ const uint32_t sample_rates[] = {8000, 16000, 22000, 44000, 48000}; // frecuenci
 #define CTIMER_CLK_FREQ 600000 // 1.2 MHz
 
 // Seno del DAC1
-#define SINE_POINTS   100          // cantidad de muestras por ciclo
+#define SINE_POINTS   100	// cantidad de muestras por ciclo
+#define BUFFER_SIZE   512	// tamaño del buffer de datos
+#define TAPS_SIZE	  4    // orden del filtro
 
 #define BOARD_LED_RED_GPIO GPIO0
 #define BOARD_LED_RED_PIN 10
@@ -64,22 +64,29 @@ volatile uint8_t sample_rate_idx = 0; // indice para elegir frecuencia de muestr
 q15_t adc_buffer[BUFFER_SIZE]; // buffer circular para almacenar conversiones
 volatile uint16_t buf_index = 0; // indice para recorrer el buffer circular
 
-static const float s_firTaps[TAPS_SIZE] = {-0.010711669921875,-0.0223388671875,-0.007080078125,-0.015289306640625,
-		-0.009521484375   ,-0.008209228515625,-0.002838134765625, 0.00146484375    , 0.00592041015625 ,
-		0.0086669921875   , 0.009521484375   , 0.008026123046875, 0.004486083984375,-0.00042724609375 ,
-		-0.00567626953125 ,-0.010040283203125,-0.01239013671875 ,-0.011993408203125,-0.008636474609375,
-		-0.002777099609375,0.004425048828125 , 0.011505126953125, 0.0167236328125  , 0.0185546875     ,
-		0.01611328125     , 0.00933837890625 ,-0.000885009765625,-0.012725830078125,-0.023681640625   ,
-		-0.031005859375   ,-0.032135009765625,-0.02532958984375 ,-0.009857177734375, 0.013519287109375,
-		0.04266357421875  , 0.074462890625   , 0.105010986328125, 0.130340576171875, 0.147064208984375,
-		0.15289306640625  , 0.147064208984375, 0.130340576171875, 0.105010986328125, 0.074462890625   ,
-		0.04266357421875  , 0.013519287109375,-0.009857177734375,-0.02532958984375 ,-0.032135009765625,
-		-0.031005859375   ,-0.023681640625   ,-0.012725830078125,-0.000885009765625, 0.00933837890625 ,
-		0.01611328125     , 0.0185546875     , 0.0167236328125  , 0.011505126953125, 0.004425048828125,
-		-0.002777099609375,-0.008636474609375,-0.011993408203125,-0.01239013671875 ,-0.010040283203125,
-		-0.00567626953125 ,-0.00042724609375 , 0.004486083984375, 0.008026123046875, 0.009521484375   ,
-		0.0086669921875   , 0.00592041015625 , 0.00146484375    ,-0.002838134765625,-0.008209228515625,
-		-0.009521484375   ,-0.015289306640625,-0.007080078125   ,-0.0223388671875  ,-0.010711669921875};
+// Filtro Fc = 3,6 kHz
+//static const float fir_taps_float[TAPS_SIZE] = {-0.010711669921875,-0.0223388671875,-0.007080078125,-0.015289306640625,
+//		-0.009521484375   ,-0.008209228515625,-0.002838134765625, 0.00146484375    , 0.00592041015625 ,
+//		0.0086669921875   , 0.009521484375   , 0.008026123046875, 0.004486083984375,-0.00042724609375 ,
+//		-0.00567626953125 ,-0.010040283203125,-0.01239013671875 ,-0.011993408203125,-0.008636474609375,
+//		-0.002777099609375,0.004425048828125 , 0.011505126953125, 0.0167236328125  , 0.0185546875     ,
+//		0.01611328125     , 0.00933837890625 ,-0.000885009765625,-0.012725830078125,-0.023681640625   ,
+//		-0.031005859375   ,-0.032135009765625,-0.02532958984375 ,-0.009857177734375, 0.013519287109375,
+//		0.04266357421875  , 0.074462890625   , 0.105010986328125, 0.130340576171875, 0.147064208984375,
+//		0.15289306640625  , 0.147064208984375, 0.130340576171875, 0.105010986328125, 0.074462890625   ,
+//		0.04266357421875  , 0.013519287109375,-0.009857177734375,-0.02532958984375 ,-0.032135009765625,
+//		-0.031005859375   ,-0.023681640625   ,-0.012725830078125,-0.000885009765625, 0.00933837890625 ,
+//		0.01611328125     , 0.0185546875     , 0.0167236328125  , 0.011505126953125, 0.004425048828125,
+//		-0.002777099609375,-0.008636474609375,-0.011993408203125,-0.01239013671875 ,-0.010040283203125,
+//		-0.00567626953125 ,-0.00042724609375 , 0.004486083984375, 0.008026123046875, 0.009521484375   ,
+//		0.0086669921875   , 0.00592041015625 , 0.00146484375    ,-0.002838134765625,-0.008209228515625,
+//		-0.009521484375   ,-0.015289306640625,-0.007080078125   ,-0.0223388671875  ,-0.010711669921875, 0};
+
+static const float fir_taps_float[TAPS_SIZE] = {0, 0, 1, 0};
+
+static int16_t fir_taps_q15[TAPS_SIZE];
+static int16_t out_buffer_q15[BUFFER_SIZE];
+static uint16_t out_buffer_uint[BUFFER_SIZE];
 
 static ctimer_match_config_t ctimerMatchConfig = {
   .matchValue = 749,
@@ -116,43 +123,35 @@ static void LED_SetColor(bool RED, bool GREEN, bool BLUE)
 }
 
 static void PQ_FIRFixed16Example(void){
-    static int16_t tap[TAPS_SIZE];
-	static int16_t output[BUFFER_SIZE];
-	static uint32_t i;
-	static uint32_t oldTime;
-    pq_config_t pqConfig;
+//    pq_config_t pqConfig;
 
-    /* Initialize the filter. HACERLO EN EL MAIN */
-    for (i = 0; i < TAPS_SIZE; i++)
-    {
-        tap[i] = (int16_t)s_firTaps[i];
-    }
-    memset(output, 0, BUFFER_SIZE);
+    memset(out_buffer_q15, 0, BUFFER_SIZE);
 
     /*
      * Normal method:
      * The input data and taps are all in system RAM, powerquad fetches the data
      * through the same bus.
+     * ESTO LO HACE EL CONFIG TOOLS
      */
-    pqConfig.inputAFormat   = kPQ_16Bit;
-    pqConfig.inputAPrescale = 0;
-    pqConfig.inputBFormat   = kPQ_16Bit;
-    pqConfig.inputBPrescale = 0;
-    pqConfig.outputFormat   = kPQ_16Bit;
-    pqConfig.outputPrescale = 0;
-    pqConfig.tmpFormat      = kPQ_Float;
-    pqConfig.tmpPrescale    = 0;
-    pqConfig.machineFormat  = kPQ_Float;
-    pqConfig.tmpBase        = (uint32_t *)0xE0000000;
+//    pqConfig.inputAFormat   = kPQ_16Bit;
+//    pqConfig.inputAPrescale = 0;
+//    pqConfig.inputBFormat   = kPQ_16Bit;
+//    pqConfig.inputBPrescale = 0;
+//    pqConfig.outputFormat   = kPQ_16Bit;
+//    pqConfig.outputPrescale = 0;
+//    pqConfig.tmpFormat      = kPQ_Float;
+//    pqConfig.tmpPrescale    = 0;
+//    pqConfig.machineFormat  = kPQ_Float;
+//    pqConfig.tmpBase        = (uint32_t *)0xE0000000;
 
-    PQ_SetConfig(POWERQUAD, &pqConfig);
+//    PQ_SetConfig(POWERQUAD, &POWERQUAD_config);
 
 //    oldTime = EXAMPLE_GetTime();
-    for (i = 0; i < EXAMPLE_CALCULATION_LOOP; i++)
-    {
-        PQ_FIR(POWERQUAD, adc_buffer, BUFFER_SIZE, tap, TAPS_SIZE, output, PQ_FIR_FIR);
-        PQ_WaitDone(POWERQUAD);
-    }
+//    for (i = 0; i < EXAMPLE_CALCULATION_LOOP; i++)
+//    {
+	PQ_FIR(POWERQUAD, adc_buffer, BUFFER_SIZE, fir_taps_q15, TAPS_SIZE, out_buffer_q15, PQ_FIR_FIR);
+	PQ_WaitDone(POWERQUAD);
+//    }
 
 //    PRINTF("%s: %d ms\r\n", "PQ fir fixed 16-bit normal method", (int)(EXAMPLE_GetTime() - oldTime));
 
@@ -185,12 +184,15 @@ void ADC0_IRQHANDLER(void) {
 	adc_buffer[buf_index] = (q15_t)(adc_val - 32768U);
 //	q15_t q15_val = ((int32_t)adc_val - 2048) << 4;
 
+////	Filtrar: tarda 700 us
+//	if(buf_index >= BUFFER_SIZE - 1){
+//	    memset(out_buffer_q15, 0, BUFFER_SIZE);
+//		PQ_FIR(POWERQUAD, adc_buffer, BUFFER_SIZE, fir_taps_q15, TAPS_SIZE, out_buffer_q15, PQ_FIR_FIR);
+//		PQ_WaitDone(POWERQUAD);
+//	}
+
 	// Buffer circular
 	buf_index = (buf_index + 1) % BUFFER_SIZE;
-
-	// Enviar al DAC
-//	ADC: [0,65536] DAC: [0,4096]
-	DAC_SetData(DAC0, adc_val >> 4);
 }
 
 // ---- Callback de CTIMER1: genera seno ----
@@ -270,17 +272,43 @@ int main(void)
 
     PQ_Init(POWERQUAD);
 
+    // Convierte los coeficientes del filtro a q15
+    for (int i = 0; i < TAPS_SIZE; i++)
+    {
+    	fir_taps_q15[i] = (int16_t)(fir_taps_float[i] * 32768);
+//    	fir_taps_q15[i] = (int16_t) __SSAT(((int32_t)(fir_taps_float[i] * 32768.0f)), 16);	// Para saturar
+    }
+
+    arm_fir_instance_q15 fir;
+    q15_t state[BUFFER_SIZE + TAPS_SIZE - 1];
+
+    arm_fir_init_q15(&fir, TAPS_SIZE, fir_taps_q15, state, BUFFER_SIZE);
+
     PRINTF("Filtro FIR pasa bajos\r\n");
 
     UpdateLedColor(sample_rate_idx);
     GenerateSineTable();
-//    TODO: MULTIPLICAR ACA EL ARRAY DE COEFICIENTES DEL FIR POR 2^15 PARA PASARLOS A Q15
 
-    CTIMER_StartTimer(CTIMER1);
+//    CTIMER_StartTimer(CTIMER1);
     CTIMER_StartTimer(CTIMER0);
 
     while (1) {
-        // El trabajo lo hacen las interrupciones
-        __NOP();
+//        // El trabajo lo hacen las interrupciones
+//        __NOP();
+
+//    	Filtrado
+    	if(buf_index >= BUFFER_SIZE - 1){
+//			memset(out_buffer_q15, 0, BUFFER_SIZE);
+////			Tarda 700 us
+//			PQ_FIR(POWERQUAD, adc_buffer, BUFFER_SIZE, fir_taps_q15, TAPS_SIZE, out_buffer_q15, PQ_FIR_FIR);
+//			PQ_WaitDone(POWERQUAD);
+	        arm_fir_q15(&fir, adc_buffer, out_buffer_q15, BUFFER_SIZE);
+
+			// Enviar al DAC
+			for(int i = 0; i < BUFFER_SIZE; i++){
+				out_buffer_uint[i] = (uint16_t)(out_buffer_q15[i] + 32768U) >> 4;
+				DAC_SetData(DAC0, out_buffer_uint[i]);
+			}
+		}
     }
 }

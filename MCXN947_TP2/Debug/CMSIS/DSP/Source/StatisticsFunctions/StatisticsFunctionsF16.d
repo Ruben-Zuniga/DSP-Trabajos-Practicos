@@ -2,19 +2,19 @@ CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctionsF16.o \
  CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctionsF16.d: \
  ../CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctionsF16.c \
  ../CMSIS/DSP/Source/StatisticsFunctions/arm_max_f16.c \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/statistics_functions_f16.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_types_f16.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_types.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/cmsis_compiler.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/cmsis_gcc.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_memory.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/none.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_types.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/utils.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/basic_math_functions_f16.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/fast_math_functions_f16.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/fast_math_functions.h \
- /home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/basic_math_functions.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/statistics_functions_f16.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types_f16.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types.h \
+ C:\workspace\MCXN947_TP2\CMSIS/cmsis_compiler.h \
+ C:\workspace\MCXN947_TP2\CMSIS/cmsis_gcc.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_memory.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/none.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/utils.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/basic_math_functions_f16.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/fast_math_functions_f16.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/fast_math_functions.h \
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/basic_math_functions.h \
  ../CMSIS/DSP/Source/StatisticsFunctions/arm_min_f16.c \
  ../CMSIS/DSP/Source/StatisticsFunctions/arm_mean_f16.c \
  ../CMSIS/DSP/Source/StatisticsFunctions/arm_power_f16.c \
@@ -34,19 +34,19 @@ CMSIS/DSP/Source/StatisticsFunctions/StatisticsFunctionsF16.o \
  ../CMSIS/DSP/Source/StatisticsFunctions/arm_mse_f16.c \
  ../CMSIS/DSP/Source/StatisticsFunctions/arm_accumulate_f16.c
 ../CMSIS/DSP/Source/StatisticsFunctions/arm_max_f16.c:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/statistics_functions_f16.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_types_f16.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_types.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/cmsis_compiler.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/cmsis_gcc.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_memory.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/none.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/arm_math_types.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/utils.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/basic_math_functions_f16.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/fast_math_functions_f16.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/fast_math_functions.h:
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include/dsp/basic_math_functions.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/statistics_functions_f16.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types_f16.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types.h:
+C:\workspace\MCXN947_TP2\CMSIS/cmsis_compiler.h:
+C:\workspace\MCXN947_TP2\CMSIS/cmsis_gcc.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_memory.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/none.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/utils.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/basic_math_functions_f16.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/fast_math_functions_f16.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/fast_math_functions.h:
+C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/basic_math_functions.h:
 ../CMSIS/DSP/Source/StatisticsFunctions/arm_min_f16.c:
 ../CMSIS/DSP/Source/StatisticsFunctions/arm_mean_f16.c:
 ../CMSIS/DSP/Source/StatisticsFunctions/arm_power_f16.c:

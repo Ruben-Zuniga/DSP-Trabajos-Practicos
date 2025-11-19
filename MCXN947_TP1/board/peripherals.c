@@ -570,7 +570,7 @@ instance:
       - 0:
         - matchChannelPrefixId: 'Match_0'
         - matchChannel: 'kCTIMER_Match_0'
-        - matchValueStr: '5 kHz'
+        - matchValueStr: '50 kHz'
         - enableCounterReset: 'true'
         - enableCounterStop: 'false'
         - outControl: 'kCTIMER_Output_NoAction'
@@ -592,7 +592,7 @@ const ctimer_config_t CTIMER1_config = {
   .prescale = 14
 };
 const ctimer_match_config_t CTIMER1_Match_0_config = {
-  .matchValue = 1999,
+  .matchValue = 199,
   .enableCounterReset = true,
   .enableCounterStop = false,
   .outControl = kCTIMER_Output_NoAction,

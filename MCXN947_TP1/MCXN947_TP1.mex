@@ -1349,7 +1349,7 @@
                            <struct name="0">
                               <setting name="matchChannelPrefixId" value="Match_0"/>
                               <setting name="matchChannel" value="kCTIMER_Match_0"/>
-                              <setting name="matchValueStr" value="5 kHz"/>
+                              <setting name="matchValueStr" value="50 kHz"/>
                               <setting name="enableCounterReset" value="true"/>
                               <setting name="enableCounterStop" value="false"/>
                               <setting name="outControl" value="kCTIMER_Output_NoAction"/>
@@ -1455,6 +1455,22 @@
                                  <setting name="timeoutValue" value="0"/>
                               </struct>
                            </struct>
+                        </struct>
+                     </config_set>
+                  </instance>
+                  <instance name="POWERQUAD" uuid="a62c6a11-6ac3-4958-b092-584c1ccc38a4" type="powerquad" type_id="powerquad_2.1.0" mode="general" peripheral="POWERQUAD" enabled="false" comment="" custom_name_enabled="false" editing_lock="false">
+                     <config_set name="fsl_powerquad">
+                        <struct name="powerQuadConfig">
+                           <setting name="inputAFormat" value="kPQ_16Bit"/>
+                           <setting name="inputAPrescale" value="0"/>
+                           <setting name="inputBFormat" value="kPQ_16Bit"/>
+                           <setting name="inputBPrescale" value="0"/>
+                           <setting name="outputFormat" value="kPQ_16Bit"/>
+                           <setting name="outputPrescale" value="0"/>
+                           <setting name="tmpFormat" value="kPQ_Float"/>
+                           <setting name="tmpPrescale" value="0"/>
+                           <setting name="machineFormat" value="kPQ_Float"/>
+                           <setting name="tmpBaseValue" value="0xE0000000UL"/>
                         </struct>
                      </config_set>
                   </instance>

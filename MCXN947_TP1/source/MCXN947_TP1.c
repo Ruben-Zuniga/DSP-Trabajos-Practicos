@@ -61,7 +61,7 @@ static void LED_SetColor(bool RED, bool GREEN, bool BLUE);
  ******************************************************************************/
 volatile bool adc_run = true;
 volatile uint8_t sample_rate_idx = 0; // indice para elegir frecuencia de muestreo
-q15_t adc_buffer[BUFFER_SIZE]; // buffer circular para almacenar conversiones
+q15_t adc_buffer[BUFFER_SIZE] = {0}; // buffer circular para almacenar conversiones
 volatile uint16_t buf_index = 0; // indice para recorrer el buffer circular
 
 static ctimer_match_config_t ctimerMatchConfig = {
@@ -215,8 +215,13 @@ int main(void)
     PRINTF("Timer 1 status: %d \r\n", CTIMER1->TCR);
     PRINTF("Timer 0 status: %d \r\n", CTIMER0->TCR);
 
+//    uint16_t main_read_idx = 0; // TESTEAR: Mandar valor medido a un osciloscopio virtual
+
     while (1) {
         // El trabajo lo hacen las interrupciones
         __NOP();
+
+////        TESTEAR: Mandar valor medido a un osciloscopio virtual
+//        PRINTF("%d\r\n", adc_buffer[main_read_idx] + 32768U);
     }
 }

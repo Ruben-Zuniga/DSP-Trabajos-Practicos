@@ -18,6 +18,7 @@
 #include "fsl_gpio.h"
 #include "fsl_ctimer.h"
 #include "fsl_dac.h"
+#include "fsl_powerquad.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -99,6 +100,8 @@ extern "C" {
 #define DAC1_IRQN DAC1_IRQn
 /* DAC1 interrupt handler identifier. */
 #define DAC1_IRQHANDLER DAC1_IRQHandler
+/* Definition of peripheral ID */
+#define POWERQUAD_PERIPHERAL POWERQUAD
 
 /***********************************************************************************************************************
  * Global variables
@@ -115,6 +118,7 @@ extern const ctimer_config_t CTIMER1_config;
 extern const ctimer_match_config_t CTIMER1_Match_0_config;
 /* LPDAC configuration */
 extern const dac_config_t DAC1_config;
+extern const pq_config_t POWERQUAD_config;
 
 /***********************************************************************************************************************
  * Callback functions

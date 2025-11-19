@@ -9,6 +9,8 @@ C_SRCS += \
 ../drivers/fsl_common_arm.c \
 ../drivers/fsl_ctimer.c \
 ../drivers/fsl_dac.c \
+../drivers/fsl_edma.c \
+../drivers/fsl_edma_soc.c \
 ../drivers/fsl_gpio.c \
 ../drivers/fsl_inputmux.c \
 ../drivers/fsl_lpadc.c \
@@ -16,6 +18,12 @@ C_SRCS += \
 ../drivers/fsl_lpi2c.c \
 ../drivers/fsl_lpspi.c \
 ../drivers/fsl_lpuart.c \
+../drivers/fsl_powerquad_basic.c \
+../drivers/fsl_powerquad_data.c \
+../drivers/fsl_powerquad_filter.c \
+../drivers/fsl_powerquad_math.c \
+../drivers/fsl_powerquad_matrix.c \
+../drivers/fsl_powerquad_transform.c \
 ../drivers/fsl_reset.c \
 ../drivers/fsl_spc.c \
 ../drivers/fsl_vref.c 
@@ -26,6 +34,8 @@ C_DEPS += \
 ./drivers/fsl_common_arm.d \
 ./drivers/fsl_ctimer.d \
 ./drivers/fsl_dac.d \
+./drivers/fsl_edma.d \
+./drivers/fsl_edma_soc.d \
 ./drivers/fsl_gpio.d \
 ./drivers/fsl_inputmux.d \
 ./drivers/fsl_lpadc.d \
@@ -33,6 +43,12 @@ C_DEPS += \
 ./drivers/fsl_lpi2c.d \
 ./drivers/fsl_lpspi.d \
 ./drivers/fsl_lpuart.d \
+./drivers/fsl_powerquad_basic.d \
+./drivers/fsl_powerquad_data.d \
+./drivers/fsl_powerquad_filter.d \
+./drivers/fsl_powerquad_math.d \
+./drivers/fsl_powerquad_matrix.d \
+./drivers/fsl_powerquad_transform.d \
 ./drivers/fsl_reset.d \
 ./drivers/fsl_spc.d \
 ./drivers/fsl_vref.d 
@@ -43,6 +59,8 @@ OBJS += \
 ./drivers/fsl_common_arm.o \
 ./drivers/fsl_ctimer.o \
 ./drivers/fsl_dac.o \
+./drivers/fsl_edma.o \
+./drivers/fsl_edma_soc.o \
 ./drivers/fsl_gpio.o \
 ./drivers/fsl_inputmux.o \
 ./drivers/fsl_lpadc.o \
@@ -50,6 +68,12 @@ OBJS += \
 ./drivers/fsl_lpi2c.o \
 ./drivers/fsl_lpspi.o \
 ./drivers/fsl_lpuart.o \
+./drivers/fsl_powerquad_basic.o \
+./drivers/fsl_powerquad_data.o \
+./drivers/fsl_powerquad_filter.o \
+./drivers/fsl_powerquad_math.o \
+./drivers/fsl_powerquad_matrix.o \
+./drivers/fsl_powerquad_transform.o \
 ./drivers/fsl_reset.o \
 ./drivers/fsl_spc.o \
 ./drivers/fsl_vref.o 
@@ -59,7 +83,7 @@ OBJS += \
 drivers/%.o: ../drivers/%.c drivers/subdir.mk
 	@echo 'Building file: $<'
 	@echo 'Invoking: MCU C Compiler'
-	arm-none-eabi-gcc -D__REDLIB__ -DCPU_MCXN947VDF -DCPU_MCXN947VDF_cm33 -DCPU_MCXN947VDF_cm33_core0 -DSERIAL_PORT_TYPE_UART=1 -DSDK_DEBUGCONSOLE=0 -DCR_INTEGER_PRINTF -DPRINTF_FLOAT_ENABLE=0 -D__MCUXPRESSO -D__USE_CMSIS -DDEBUG -DDISABLEFLOAT16 -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/utilities/debug_console" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/component/uart" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/utilities/debug_console/config" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/component/serial_manager" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/component/lists" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/device/periph" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/utilities" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/m-profile" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/utilities/str" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Include" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/PrivateInclude" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/CMSIS/DSP/Source/DistanceFunctions" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/board" -I"/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/source" -O0 -fno-common -g3 -gdwarf-4 -Wall -c -ffunction-sections -fdata-sections -fno-builtin -fmerge-constants -fmacro-prefix-map="$(<D)/"= -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -D__REDLIB__ -fstack-usage -specs=redlib.specs -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
+	arm-none-eabi-gcc -D__REDLIB__ -DCPU_MCXN947VDF -DCPU_MCXN947VDF_cm33 -DCPU_MCXN947VDF_cm33_core0 -DSERIAL_PORT_TYPE_UART=1 -DSDK_DEBUGCONSOLE=0 -DCR_INTEGER_PRINTF -DPRINTF_FLOAT_ENABLE=0 -D__MCUXPRESSO -D__USE_CMSIS -DDEBUG -I"C:\workspace\MCXN947_TP2\drivers" -I"C:\workspace\MCXN947_TP2\device" -I"C:\workspace\MCXN947_TP2\utilities\debug_console" -I"C:\workspace\MCXN947_TP2\component\uart" -I"C:\workspace\MCXN947_TP2\utilities\debug_console\config" -I"C:\workspace\MCXN947_TP2\component\serial_manager" -I"C:\workspace\MCXN947_TP2\component\lists" -I"C:\workspace\MCXN947_TP2\device\periph" -I"C:\workspace\MCXN947_TP2\utilities" -I"C:\workspace\MCXN947_TP2\CMSIS" -I"C:\workspace\MCXN947_TP2\CMSIS\m-profile" -I"C:\workspace\MCXN947_TP2\utilities\str" -I"C:\workspace\MCXN947_TP2\CMSIS\DSP\Include" -I"C:\workspace\MCXN947_TP2\CMSIS\DSP\PrivateInclude" -I"C:\workspace\MCXN947_TP2\board" -I"C:\workspace\MCXN947_TP2\CMSIS\DSP\Source\DistanceFunctions" -I"C:\workspace\MCXN947_TP2\source" -O0 -fno-common -g3 -gdwarf-4 -Wall -c -ffunction-sections -fdata-sections -fno-builtin -fmerge-constants -fmacro-prefix-map="$(<D)/"= -mcpu=cortex-m33 -mfpu=fpv5-sp-d16 -mfloat-abi=hard -mthumb -D__REDLIB__ -fstack-usage -specs=redlib.specs -MMD -MP -MF"$(@:%.o=%.d)" -MT"$(@:%.o=%.o)" -MT"$(@:%.o=%.d)" -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
@@ -67,7 +91,7 @@ drivers/%.o: ../drivers/%.c drivers/subdir.mk
 clean: clean-drivers
 
 clean-drivers:
-	-$(RM) ./drivers/fsl_clock.d ./drivers/fsl_clock.o ./drivers/fsl_common.d ./drivers/fsl_common.o ./drivers/fsl_common_arm.d ./drivers/fsl_common_arm.o ./drivers/fsl_ctimer.d ./drivers/fsl_ctimer.o ./drivers/fsl_dac.d ./drivers/fsl_dac.o ./drivers/fsl_gpio.d ./drivers/fsl_gpio.o ./drivers/fsl_inputmux.d ./drivers/fsl_inputmux.o ./drivers/fsl_lpadc.d ./drivers/fsl_lpadc.o ./drivers/fsl_lpflexcomm.d ./drivers/fsl_lpflexcomm.o ./drivers/fsl_lpi2c.d ./drivers/fsl_lpi2c.o ./drivers/fsl_lpspi.d ./drivers/fsl_lpspi.o ./drivers/fsl_lpuart.d ./drivers/fsl_lpuart.o ./drivers/fsl_reset.d ./drivers/fsl_reset.o ./drivers/fsl_spc.d ./drivers/fsl_spc.o ./drivers/fsl_vref.d ./drivers/fsl_vref.o
+	-$(RM) ./drivers/fsl_clock.d ./drivers/fsl_clock.o ./drivers/fsl_common.d ./drivers/fsl_common.o ./drivers/fsl_common_arm.d ./drivers/fsl_common_arm.o ./drivers/fsl_ctimer.d ./drivers/fsl_ctimer.o ./drivers/fsl_dac.d ./drivers/fsl_dac.o ./drivers/fsl_edma.d ./drivers/fsl_edma.o ./drivers/fsl_edma_soc.d ./drivers/fsl_edma_soc.o ./drivers/fsl_gpio.d ./drivers/fsl_gpio.o ./drivers/fsl_inputmux.d ./drivers/fsl_inputmux.o ./drivers/fsl_lpadc.d ./drivers/fsl_lpadc.o ./drivers/fsl_lpflexcomm.d ./drivers/fsl_lpflexcomm.o ./drivers/fsl_lpi2c.d ./drivers/fsl_lpi2c.o ./drivers/fsl_lpspi.d ./drivers/fsl_lpspi.o ./drivers/fsl_lpuart.d ./drivers/fsl_lpuart.o ./drivers/fsl_powerquad_basic.d ./drivers/fsl_powerquad_basic.o ./drivers/fsl_powerquad_data.d ./drivers/fsl_powerquad_data.o ./drivers/fsl_powerquad_filter.d ./drivers/fsl_powerquad_filter.o ./drivers/fsl_powerquad_math.d ./drivers/fsl_powerquad_math.o ./drivers/fsl_powerquad_matrix.d ./drivers/fsl_powerquad_matrix.o ./drivers/fsl_powerquad_transform.d ./drivers/fsl_powerquad_transform.o ./drivers/fsl_reset.d ./drivers/fsl_reset.o ./drivers/fsl_spc.d ./drivers/fsl_spc.o ./drivers/fsl_vref.d ./drivers/fsl_vref.o
 
 .PHONY: clean-drivers
 

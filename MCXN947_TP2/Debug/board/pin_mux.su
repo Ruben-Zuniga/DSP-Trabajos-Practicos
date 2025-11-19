@@ -1,8 +1,8 @@
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_clock.h:1488:20:CLOCK_EnableClock	24	static
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_port.h:360:20:PORT_SetPinConfig	32	static
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_port.h:463:20:PORT_SetPinMux	24	static
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_port.h:651:20:PORT_DisableEFTDetectInterrupts	16	static
-/home/ruben/Documentos/Facultad/Procesamiento_Digital_de_Seniales/workspace2/MCXN947_TP1/drivers/fsl_gpio.h:482:20:GPIO_SetPinInterruptConfig	24	static
+C:\workspace\MCXN947_TP2\drivers/fsl_clock.h:1488:20:CLOCK_EnableClock	24	static
+C:\workspace\MCXN947_TP2\drivers/fsl_port.h:360:20:PORT_SetPinConfig	32	static
+C:\workspace\MCXN947_TP2\drivers/fsl_port.h:463:20:PORT_SetPinMux	24	static
+C:\workspace\MCXN947_TP2\drivers/fsl_port.h:651:20:PORT_DisableEFTDetectInterrupts	16	static
+C:\workspace\MCXN947_TP2\drivers/fsl_gpio.h:482:20:GPIO_SetPinInterruptConfig	24	static
 ../board/pin_mux.c:317:6:BOARD_InitBootPins	8	static
 ../board/pin_mux.c:346:6:BOARD_InitDEBUG_UARTPins	16	static
 ../board/pin_mux.c:420:6:BOARD_InitSWD_DEBUGPins	24	static
