@@ -5,7 +5,7 @@
  	 ADC0: J4.2
  	 DAC0: J1.4
  	 DAC1: J1.2
- 	 MATCH0: J7.1 o J2.13
+ 	 MATCH3: J2.13
  	 GND: J5.8 o J6.8
  */
 #include "board.h"
@@ -40,7 +40,7 @@ const uint32_t sample_rates[] = {8000, 16000, 22000, 44000, 48000}; // frecuenci
 #define CTIMER_CLK_FREQ 600000 // 1.2 MHz
 
 // Seno del DAC1
-#define SINE_POINTS   100          // cantidad de muestras por ciclo
+#define SINE_POINTS   100 // cantidad de muestras por ciclo
 
 #define BOARD_LED_RED_GPIO GPIO0
 #define BOARD_LED_RED_PIN 10
