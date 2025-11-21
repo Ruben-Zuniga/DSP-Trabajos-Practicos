@@ -40,7 +40,7 @@ const uint32_t sample_rates[] = {8000, 16000, 22000, 44000, 48000}; // frecuenci
 // Seno del DAC1
 #define SINE_POINTS   100	// cantidad de muestras por ciclo
 #define BUFFER_SIZE   512	// tamaño del buffer de datos
-#define TAPS_SIZE	  4    // orden del filtro
+#define TAPS_SIZE	  80    // orden del filtro (80)
 
 #define BOARD_LED_RED_GPIO GPIO0
 #define BOARD_LED_RED_PIN 10
@@ -62,31 +62,38 @@ static void LED_SetColor(bool RED, bool GREEN, bool BLUE);
 volatile bool adc_run = true;
 volatile uint8_t sample_rate_idx = 0; // indice para elegir frecuencia de muestreo
 q15_t adc_buffer[BUFFER_SIZE]; // buffer circular para almacenar conversiones
-volatile uint16_t buf_index = 0; // indice para recorrer el buffer circular
+volatile uint16_t adc_buf_index = 0; // indice para recorrer el buffer circular
+volatile uint16_t dac_buf_index = 0; // indice para recorrer el buffer circular
 
 // Filtro Fc = 3,6 kHz
-//static const float fir_taps_float[TAPS_SIZE] = {-0.010711669921875,-0.0223388671875,-0.007080078125,-0.015289306640625,
-//		-0.009521484375   ,-0.008209228515625,-0.002838134765625, 0.00146484375    , 0.00592041015625 ,
-//		0.0086669921875   , 0.009521484375   , 0.008026123046875, 0.004486083984375,-0.00042724609375 ,
-//		-0.00567626953125 ,-0.010040283203125,-0.01239013671875 ,-0.011993408203125,-0.008636474609375,
-//		-0.002777099609375,0.004425048828125 , 0.011505126953125, 0.0167236328125  , 0.0185546875     ,
-//		0.01611328125     , 0.00933837890625 ,-0.000885009765625,-0.012725830078125,-0.023681640625   ,
-//		-0.031005859375   ,-0.032135009765625,-0.02532958984375 ,-0.009857177734375, 0.013519287109375,
-//		0.04266357421875  , 0.074462890625   , 0.105010986328125, 0.130340576171875, 0.147064208984375,
-//		0.15289306640625  , 0.147064208984375, 0.130340576171875, 0.105010986328125, 0.074462890625   ,
-//		0.04266357421875  , 0.013519287109375,-0.009857177734375,-0.02532958984375 ,-0.032135009765625,
-//		-0.031005859375   ,-0.023681640625   ,-0.012725830078125,-0.000885009765625, 0.00933837890625 ,
-//		0.01611328125     , 0.0185546875     , 0.0167236328125  , 0.011505126953125, 0.004425048828125,
-//		-0.002777099609375,-0.008636474609375,-0.011993408203125,-0.01239013671875 ,-0.010040283203125,
-//		-0.00567626953125 ,-0.00042724609375 , 0.004486083984375, 0.008026123046875, 0.009521484375   ,
-//		0.0086669921875   , 0.00592041015625 , 0.00146484375    ,-0.002838134765625,-0.008209228515625,
-//		-0.009521484375   ,-0.015289306640625,-0.007080078125   ,-0.0223388671875  ,-0.010711669921875, 0};
+static const float fir_taps_float[TAPS_SIZE] = {-0.010711669921875,-0.0223388671875,-0.007080078125,-0.015289306640625,
+		-0.009521484375   ,-0.008209228515625,-0.002838134765625, 0.00146484375    , 0.00592041015625 ,
+		0.0086669921875   , 0.009521484375   , 0.008026123046875, 0.004486083984375,-0.00042724609375 ,
+		-0.00567626953125 ,-0.010040283203125,-0.01239013671875 ,-0.011993408203125,-0.008636474609375,
+		-0.002777099609375,0.004425048828125 , 0.011505126953125, 0.0167236328125  , 0.0185546875     ,
+		0.01611328125     , 0.00933837890625 ,-0.000885009765625,-0.012725830078125,-0.023681640625   ,
+		-0.031005859375   ,-0.032135009765625,-0.02532958984375 ,-0.009857177734375, 0.013519287109375,
+		0.04266357421875  , 0.074462890625   , 0.105010986328125, 0.130340576171875, 0.147064208984375,
+		0.15289306640625  , 0.147064208984375, 0.130340576171875, 0.105010986328125, 0.074462890625   ,
+		0.04266357421875  , 0.013519287109375,-0.009857177734375,-0.02532958984375 ,-0.032135009765625,
+		-0.031005859375   ,-0.023681640625   ,-0.012725830078125,-0.000885009765625, 0.00933837890625 ,
+		0.01611328125     , 0.0185546875     , 0.0167236328125  , 0.011505126953125, 0.004425048828125,
+		-0.002777099609375,-0.008636474609375,-0.011993408203125,-0.01239013671875 ,-0.010040283203125,
+		-0.00567626953125 ,-0.00042724609375 , 0.004486083984375, 0.008026123046875, 0.009521484375   ,
+		0.0086669921875   , 0.00592041015625 , 0.00146484375    ,-0.002838134765625,-0.008209228515625,
+		-0.009521484375   ,-0.015289306640625,-0.007080078125   ,-0.0223388671875  ,-0.010711669921875, 0};
 
-static const float fir_taps_float[TAPS_SIZE] = {0, 0, 1, 0};
+//static const float fir_taps_float[TAPS_SIZE] = {1, 0};
 
 static int16_t fir_taps_q15[TAPS_SIZE];
 static int16_t out_buffer_q15[BUFFER_SIZE];
 static uint16_t out_buffer_uint[BUFFER_SIZE];
+q15_t dac_val_q15;
+uint16_t dac_val;
+
+arm_fir_instance_q15 fir;
+
+static bool fir_done = false;
 
 static ctimer_match_config_t ctimerMatchConfig = {
   .matchValue = 749,
@@ -181,18 +188,26 @@ void ADC0_IRQHANDLER(void) {
 
 //	Conversión a Q15
 //	ADC: [0,65536] Q15: [-32768,32767]
-	adc_buffer[buf_index] = (q15_t)(adc_val - 32768U);
-//	q15_t q15_val = ((int32_t)adc_val - 2048) << 4;
+	adc_buffer[adc_buf_index] = (q15_t)(adc_val - 32768U);
 
-////	Filtrar: tarda 700 us
-//	if(buf_index >= BUFFER_SIZE - 1){
-//	    memset(out_buffer_q15, 0, BUFFER_SIZE);
-//		PQ_FIR(POWERQUAD, adc_buffer, BUFFER_SIZE, fir_taps_q15, TAPS_SIZE, out_buffer_q15, PQ_FIR_FIR);
-//		PQ_WaitDone(POWERQUAD);
+//	Filtrar
+    arm_fir_q15(&fir, &adc_buffer[adc_buf_index], &dac_val_q15, 1);
+    dac_val = (uint16_t)(dac_val_q15 + 32768U) >> 4;
+    DAC_SetData(DAC0, dac_val);
+//	}
+//	if(fir_done){
+//
+//		DAC_SetData(DAC0, out_buffer_uint[dac_buf_index]);
+//		dac_buf_index = dac_buf_index + 1;
+//
+//		if(dac_buf_index >= BUFFER_SIZE){
+//			dac_buf_index = 0;
+//			fir_done = false;
+//		}
 //	}
 
 	// Buffer circular
-	buf_index = (buf_index + 1) % BUFFER_SIZE;
+	adc_buf_index = (adc_buf_index + 1) % BUFFER_SIZE;
 }
 
 // ---- Callback de CTIMER1: genera seno ----
@@ -279,7 +294,7 @@ int main(void)
 //    	fir_taps_q15[i] = (int16_t) __SSAT(((int32_t)(fir_taps_float[i] * 32768.0f)), 16);	// Para saturar
     }
 
-    arm_fir_instance_q15 fir;
+//    arm_fir_instance_q15 fir;
     q15_t state[BUFFER_SIZE + TAPS_SIZE - 1];
 
     arm_fir_init_q15(&fir, TAPS_SIZE, fir_taps_q15, state, BUFFER_SIZE);
@@ -289,7 +304,7 @@ int main(void)
     UpdateLedColor(sample_rate_idx);
     GenerateSineTable();
 
-//    CTIMER_StartTimer(CTIMER1);
+//    CTIMER_StartTimer(CTIMER1); // COMENTAR si no se usa el DAC1
     CTIMER_StartTimer(CTIMER0);
 
     while (1) {
@@ -297,18 +312,20 @@ int main(void)
 //        __NOP();
 
 //    	Filtrado
-    	if(buf_index >= BUFFER_SIZE - 1){
+    	if(adc_buf_index >= BUFFER_SIZE - 1){
 //			memset(out_buffer_q15, 0, BUFFER_SIZE);
 ////			Tarda 700 us
 //			PQ_FIR(POWERQUAD, adc_buffer, BUFFER_SIZE, fir_taps_q15, TAPS_SIZE, out_buffer_q15, PQ_FIR_FIR);
 //			PQ_WaitDone(POWERQUAD);
+//    		PRINTF("filtering...\r\n");
 	        arm_fir_q15(&fir, adc_buffer, out_buffer_q15, BUFFER_SIZE);
 
 			// Enviar al DAC
 			for(int i = 0; i < BUFFER_SIZE; i++){
 				out_buffer_uint[i] = (uint16_t)(out_buffer_q15[i] + 32768U) >> 4;
-				DAC_SetData(DAC0, out_buffer_uint[i]);
+//				PRINTF("%d\r\n", out_buffer_uint[i]);
 			}
+			fir_done = true;
 		}
     }
 }
