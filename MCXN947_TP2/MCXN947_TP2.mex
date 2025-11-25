@@ -1233,7 +1233,7 @@
                               <setting name="IRQn" value="ADC0_IRQn"/>
                               <setting name="enable_interrrupt" value="enabled"/>
                               <setting name="enable_priority" value="true"/>
-                              <setting name="priority" value="0"/>
+                              <setting name="priority" value="1"/>
                               <setting name="enable_custom_name" value="false"/>
                            </struct>
                         </struct>
@@ -1259,7 +1259,7 @@
                            <setting name="IRQn" value="GPIO00_IRQn"/>
                            <setting name="enable_interrrupt" value="enabled"/>
                            <setting name="enable_priority" value="true"/>
-                           <setting name="priority" value="1"/>
+                           <setting name="priority" value="0"/>
                            <setting name="enable_custom_name" value="false"/>
                         </struct>
                         <setting name="enable_irq_1" value="true"/>
@@ -1267,7 +1267,7 @@
                            <setting name="IRQn" value="GPIO01_IRQn"/>
                            <setting name="enable_interrrupt" value="enabled"/>
                            <setting name="enable_priority" value="true"/>
-                           <setting name="priority" value="1"/>
+                           <setting name="priority" value="0"/>
                            <setting name="enable_custom_name" value="false"/>
                         </struct>
                         <setting name="enable_irq_EFT" value="false"/>

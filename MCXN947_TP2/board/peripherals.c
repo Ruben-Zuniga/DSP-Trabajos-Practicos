@@ -260,7 +260,7 @@ instance:
         - IRQn: 'ADC0_IRQn'
         - enable_interrrupt: 'enabled'
         - enable_priority: 'true'
-        - priority: '0'
+        - priority: '1'
         - enable_custom_name: 'false'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -387,14 +387,14 @@ instance:
       - IRQn: 'GPIO00_IRQn'
       - enable_interrrupt: 'enabled'
       - enable_priority: 'true'
-      - priority: '1'
+      - priority: '0'
       - enable_custom_name: 'false'
     - enable_irq_1: 'true'
     - gpio_interrupt_1:
       - IRQn: 'GPIO01_IRQn'
       - enable_interrrupt: 'enabled'
       - enable_priority: 'true'
-      - priority: '1'
+      - priority: '0'
       - enable_custom_name: 'false'
     - enable_irq_EFT: 'false'
     - port_interrupt_EFT:

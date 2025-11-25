@@ -37,7 +37,7 @@ extern "C" {
 /* ADC0 interrupt vector ID (number). */
 #define ADC0_IRQN ADC0_IRQn
 /* ADC0 interrupt vector priority. */
-#define ADC0_IRQ_PRIORITY 0
+#define ADC0_IRQ_PRIORITY 1
 /* ADC0 interrupt handler identifier. */
 #define ADC0_IRQHANDLER ADC0_IRQHandler
 /* Command 1 - cmd0 */
@@ -53,13 +53,13 @@ extern "C" {
 /* GPIO0 interrupt vector ID (number). */
 #define GPIO0_INT_0_IRQN GPIO00_IRQn
 /* GPIO0 interrupt vector priority. */
-#define GPIO0_INT_0_IRQ_PRIORITY 1
+#define GPIO0_INT_0_IRQ_PRIORITY 0
 /* GPIO0 interrupt handler identifier. */
 #define GPIO0_INT_0_IRQHANDLER GPIO00_IRQHandler
 /* GPIO0 interrupt vector ID (number). */
 #define GPIO0_INT_1_IRQN GPIO01_IRQn
 /* GPIO0 interrupt vector priority. */
-#define GPIO0_INT_1_IRQ_PRIORITY 1
+#define GPIO0_INT_1_IRQ_PRIORITY 0
 /* GPIO0 interrupt handler identifier. */
 #define GPIO0_INT_1_IRQHANDLER GPIO01_IRQHandler
 /* Definition of peripheral ID */
