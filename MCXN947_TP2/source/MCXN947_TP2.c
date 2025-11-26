@@ -18,6 +18,18 @@
 #include "fsl_lpadc.h"
 #include "arm_math.h"
 
+#include "Coeficientes_PB_8k.h"		// Pasabajo: fc = 3,65 kHz
+#include "Coeficientes_PB_16k.h"	// Pasabajo: fc = 3,45 kHz
+#include "Coeficientes_PB_22k.h"	// Pasabajo: fc = 3,4 kHz
+#include "Coeficientes_PB_44k.h"	// Pasabajo: fc = 3,45 kHz
+#include "Coeficientes_PB_48k.h"	// Pasabajo: fc = 3,24 kHz
+
+#include "Coeficientes_PA_8k.h"		// Pasaalto: fc = 35 Hz todos
+#include "Coeficientes_PA_16k.h"
+#include "Coeficientes_PA_22k.h"
+#include "Coeficientes_PA_44k.h"
+#include "Coeficientes_PA_48k.h"
+
 /*******************************************************************************
  * Definiciones
  ******************************************************************************/
@@ -39,8 +51,7 @@ const uint32_t sample_rates[] = {8000, 16000, 22000, 44000, 48000}; // frecuenci
 
 // Tamaño de los buffers
 #define BUFFER_SIZE   (uint32_t)2048	// buffer de datos
-#define TAPS_SIZE	  (uint16_t)124    // orden del filtro
-#define INPUT_SIZE 	  (uint32_t)4     // entrada al filtro powerquad
+#define TAPS_SIZE	  (uint16_t)32    // orden del filtro
 
 // Pines del LED
 #define BOARD_LED_RED_GPIO GPIO0
@@ -64,69 +75,37 @@ bool filter_run = true; // prender/apagar filtro
 //bool process_half_B = false; // segunda mitad llena (buffer)
 
 uint8_t sample_rate_idx = 0; // indice para elegir frecuencia de muestreo
+uint8_t i_tipo_fir = 0; // indice del tipo de filtro actual
+uint8_t i_fs = 0; // indice de la frecuencia de muestreo actual
+
+// arreglo de tamaños de filtro (4 tipos de filtro, 5 frecuencias de muestreo)
+uint16_t taps_size[4][5] = {
+		{pasabajo_8k_length, pasabajo_16k_length, pasabajo_22k_length, pasabajo_44k_length, pasabajo_48k_length},
+		{pasaalto_8k_length, pasaalto_16k_length, pasaalto_22k_length, pasaalto_44k_length, pasaalto_48k_length},
+		{0, 0, 0, 0, 0},
+		{0, 0, 0, 0, 0}
+};
 
 uint16_t adc_buf_index = 0; // indice para recorrer el buffer circular de entrada
 uint16_t dac_val; // valor hacia el DAC
 
-arm_fir_instance_q15 fir[4][5];
+arm_fir_instance_q15 fir;
 
-// Pasabajo: fc = 3,65 kHz
-const q15_t pasabajo_8k[32] = {
-      236,   -318,    400,   -470,    519,   -534,    500,   -402,    224,
-       55,   -464,   1055,  -1934,   3381,  -6439,  20576,  20576,  -6439,
-     3381,  -1934,   1055,   -464,     55,    224,   -402,    500,   -534,
-      519,   -470,    400,   -318,    236
-};
-const q15_t pasabajo_16k[42] = {
-     -133,    155,    236,   -122,   -356,     33,    475,    127,   -571,
-     -368,    613,    704,   -560,  -1156,    346,   1785,    175,  -2828,
-    -1575,   5892,  13512,  13512,   5892,  -1575,  -2828,    175,   1785,
-      346,  -1156,   -560,    704,    613,   -368,   -571,    127,    475,
-       33,   -356,   -122,    236,    155,   -133
-};
-const q15_t pasabajo_22k[58] = {
-     -126,      0,    157,    180,     13,   -206,   -250,    -34,    263,
-      340,     68,   -332,   -460,   -120,    420,    626,    202,   -540,
-     -876,   -338,    725,   1304,    600,  -1082,  -2263,  -1298,   2240,
-     6928,  10244,  10244,   6928,   2240,  -1298,  -2263,  -1082,    600,
-     1304,    725,   -338,   -876,   -540,    202,    626,    420,   -120,
-     -460,   -332,     68,    340,    263,    -34,   -250,   -206,     13,
-      180,    157,      0,   -126
-};
-const q15_t pasabajo_44k[114] = {
-      -52,    -20,     21,     61,     89,     95,     76,     33,    -23,
-      -78,   -118,   -130,   -107,    -53,     22,     98,    155,    175,
-      149,     80,    -17,   -120,   -200,   -233,   -206,   -120,      8,
-      146,    259,    313,    287,    179,     10,   -180,   -343,   -431,
-     -410,   -274,    -44,    229,    477,    628,    627,    449,    114,
-     -317,   -745,  -1053,  -1130,   -894,   -314,    579,   1691,   2879,
-     3976,   4818,   5275,   5275,   4818,   3976,   2879,   1691,    579,
-     -314,   -894,  -1130,  -1053,   -745,   -317,    114,    449,    627,
-      628,    477,    229,    -44,   -274,   -410,   -431,   -343,   -180,
-       10,    179,    287,    313,    259,    146,      8,   -120,   -206,
-     -233,   -200,   -120,    -17,     80,    149,    175,    155,     98,
-       22,    -53,   -107,   -130,   -118,    -78,    -23,     33,     76,
-       95,     89,     61,     21,    -20,    -52
-};
-// Pasabajo: fc = 3,3 kHz
-const q15_t pasabajo_48k[124] = {
-      -44,    -17,     18,     52,     77,     87,     78,     50,      8,
-      -41,    -84,   -113,   -118,    -97,    -51,     11,     76,    129,
-      158,    153,    112,     42,    -44,   -128,   -190,   -214,   -191,
-     -122,    -19,     98,    204,    272,    285,    234,    123,    -27,
-     -186,   -319,   -393,   -384,   -285,   -108,    115,    340,    514,
-      593,    543,    358,     58,   -308,   -668,   -939,  -1042,   -914,
-     -523,    124,    979,   1957,   2946,   3827,   4488,   4841,   4841,
-     4488,   3827,   2946,   1957,    979,    124,   -523,   -914,  -1042,
-     -939,   -668,   -308,     58,    358,    543,    593,    514,    340,
-      115,   -108,   -285,   -384,   -393,   -319,   -186,    -27,    123,
-      234,    285,    272,    204,     98,    -19,   -122,   -191,   -214,
-     -190,   -128,    -44,     42,    112,    153,    158,    129,     76,
-       11,    -51,    -97,   -118,   -113,    -84,    -41,      8,     50,
-       78,     87,     77,     52,     18,    -17,    -44
-};
+const q15_t* fir_coef_ptr; // aca se guarda el puntero del filtro actual
 
-SDK_ALIGN(q15_t state[INPUT_SIZE + TAPS_SIZE - 1], 8);
+q15_t* state_ptr;
+
+SDK_ALIGN(q15_t state_pasabajo_8k[BUFFER_SIZE + 32 - 1], 8);
+SDK_ALIGN(q15_t state_pasabajo_16k[BUFFER_SIZE + 42 - 1], 8);
+SDK_ALIGN(q15_t state_pasabajo_22k[BUFFER_SIZE + 58 - 1], 8);
+SDK_ALIGN(q15_t state_pasabajo_44k[BUFFER_SIZE + 114 - 1], 8);
+SDK_ALIGN(q15_t state_pasabajo_48k[BUFFER_SIZE + 124 - 1], 8);
+
+SDK_ALIGN(q15_t state_pasaalto_8k[BUFFER_SIZE + 225 - 1], 8);
+SDK_ALIGN(q15_t state_pasaalto_16k[BUFFER_SIZE + 449 - 1], 8);
+SDK_ALIGN(q15_t state_pasaalto_22k[BUFFER_SIZE + 617 - 1], 8);
+SDK_ALIGN(q15_t state_pasaalto_44k[BUFFER_SIZE + 1231 - 1], 8);
+SDK_ALIGN(q15_t state_pasaalto_48k[BUFFER_SIZE + 1343 - 1], 8);
 
 SDK_ALIGN(q15_t adc_buffer[BUFFER_SIZE], 8);
 SDK_ALIGN(q15_t dac_buffer_q15[BUFFER_SIZE], 8);
@@ -197,8 +176,8 @@ void ADC0_IRQHANDLER(void) {
 //	Filtrar
 	if(filter_run && adc_buf_index >= (BUFFER_SIZE-1)){
 //	    arm_fir_q15(&fir, aux_adc_buffer, aux_dac_buffer, INPUT_SIZE);
-	    arm_fir_init_q15(&fir[0][0], TAPS_SIZE, pasabajo_48k, state, BUFFER_SIZE);
-	    arm_fir_q15(&fir[0][0], &adc_buffer[0], &dac_buffer_q15[0], BUFFER_SIZE);
+	    arm_fir_init_q15(&fir, taps_size[i_tipo_fir][i_fs], fir_coef_ptr, state_ptr, BUFFER_SIZE);
+	    arm_fir_q15(&fir, &adc_buffer[0], &dac_buffer_q15[0], BUFFER_SIZE);
 	}
 
 //  Enviar al DAC
@@ -231,11 +210,46 @@ void GPIO0_INT_1_IRQHANDLER(void)
     if (flags & (1U << SW3_PIN)) {
         sample_rate_idx = (sample_rate_idx + 1) % NUM_RATES;
 
+        // Actualizar filtro
+        i_fs = sample_rate_idx;
+
+        switch(sample_rate_idx){
+        case 0:
+            fir_coef_ptr = pasaalto_8k;
+            state_ptr = state_pasaalto_8k;
+        	break;
+
+        case 1:
+            fir_coef_ptr = pasaalto_16k;
+            state_ptr = state_pasaalto_16k;
+        	break;
+
+        case 2:
+            fir_coef_ptr = pasaalto_22k;
+            state_ptr = state_pasaalto_22k;
+        	break;
+
+        case 3:
+            fir_coef_ptr = pasaalto_44k;
+            state_ptr = state_pasaalto_44k;
+        	break;
+
+        case 4:
+            fir_coef_ptr = pasaalto_48k;
+            state_ptr = state_pasaalto_48k;
+        	break;
+
+        default:
+        	break;
+        }
+
+        // Actualizar timer
         // matchValue depende de la frecuencia de muestreo
         ctimerMatchConfig.matchValue = CTIMER_CLK_FREQ / sample_rates[sample_rate_idx];
 
         CTIMER_SetupMatch(CTIMER0, kCTIMER_Match_3, &ctimerMatchConfig);
 
+        // Atualizar LED
         UpdateLedColor(sample_rate_idx);
         PRINTF("Nueva frecuencia: %d Hz\r\n", sample_rates[sample_rate_idx]);
     }
@@ -254,6 +268,10 @@ int main(void)
     BOARD_InitDebugConsole();
 
     PRINTF("Filtro FIR pasa bajos\r\n");
+
+    fir_coef_ptr = pasaalto_8k;
+    state_ptr = state_pasaalto_8k;
+    i_tipo_fir = 1;
 
     UpdateLedColor(sample_rate_idx);
 

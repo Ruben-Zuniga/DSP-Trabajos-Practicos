@@ -146,7 +146,12 @@ source/MCXN947_TP2.o source/MCXN947_TP2.d: ../source/MCXN947_TP2.c \
  C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/filtering_functions.h \
  C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/support_functions.h \
  C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/quaternion_math_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/window_functions.h
+ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/window_functions.h \
+ ../source/Coeficientes_PB_8k.h ../source/Coeficientes_PB_16k.h \
+ ../source/Coeficientes_PB_22k.h ../source/Coeficientes_PB_44k.h \
+ ../source/Coeficientes_PB_48k.h ../source/Coeficientes_PA_8k.h \
+ ../source/Coeficientes_PA_16k.h ../source/Coeficientes_PA_22k.h \
+ ../source/Coeficientes_PA_44k.h ../source/Coeficientes_PA_48k.h
 C:\workspace\MCXN947_TP2\board/board.h:
 C:\workspace\MCXN947_TP2\board/clock_config.h:
 C:\workspace\MCXN947_TP2\drivers/fsl_common.h:
@@ -295,3 +300,13 @@ C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/filtering_functions.h:
 C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/support_functions.h:
 C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/quaternion_math_functions.h:
 C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/window_functions.h:
+../source/Coeficientes_PB_8k.h:
+../source/Coeficientes_PB_16k.h:
+../source/Coeficientes_PB_22k.h:
+../source/Coeficientes_PB_44k.h:
+../source/Coeficientes_PB_48k.h:
+../source/Coeficientes_PA_8k.h:
+../source/Coeficientes_PA_16k.h:
+../source/Coeficientes_PA_22k.h:
+../source/Coeficientes_PA_44k.h:
+../source/Coeficientes_PA_48k.h:
