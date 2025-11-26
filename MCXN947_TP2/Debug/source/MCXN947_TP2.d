@@ -96,6 +96,9 @@ source/MCXN947_TP2.o source/MCXN947_TP2.d: ../source/MCXN947_TP2.c \
  C:\workspace\MCXN947_TP2\drivers/fsl_reset.h \
  C:\workspace\MCXN947_TP2\drivers/fsl_gpio.h \
  C:\workspace\MCXN947_TP2\board/peripherals.h \
+ C:\workspace\MCXN947_TP2\drivers/fsl_edma.h \
+ C:\workspace\MCXN947_TP2\drivers/fsl_edma_core.h \
+ C:\workspace\MCXN947_TP2\drivers/fsl_edma_soc.h \
  C:\workspace\MCXN947_TP2\drivers/fsl_lpuart.h \
  C:\workspace\MCXN947_TP2\drivers/fsl_lpflexcomm.h \
  C:\workspace\MCXN947_TP2\drivers/fsl_clock.h \
@@ -241,6 +244,9 @@ C:\workspace\MCXN947_TP2\drivers/fsl_common.h:
 C:\workspace\MCXN947_TP2\drivers/fsl_reset.h:
 C:\workspace\MCXN947_TP2\drivers/fsl_gpio.h:
 C:\workspace\MCXN947_TP2\board/peripherals.h:
+C:\workspace\MCXN947_TP2\drivers/fsl_edma.h:
+C:\workspace\MCXN947_TP2\drivers/fsl_edma_core.h:
+C:\workspace\MCXN947_TP2\drivers/fsl_edma_soc.h:
 C:\workspace\MCXN947_TP2\drivers/fsl_lpuart.h:
 C:\workspace\MCXN947_TP2\drivers/fsl_lpflexcomm.h:
 C:\workspace\MCXN947_TP2\drivers/fsl_clock.h:

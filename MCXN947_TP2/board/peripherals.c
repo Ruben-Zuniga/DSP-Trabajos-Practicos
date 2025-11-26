@@ -55,6 +55,92 @@ component:
  * BOARD_InitPeripherals functional group
  **********************************************************************************************************************/
 /***********************************************************************************************************************
+ * DMA0 initialization code
+ **********************************************************************************************************************/
+/* clang-format off */
+/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
+instance:
+- name: 'DMA0'
+- type: 'edma4'
+- mode: 'general'
+- custom_name_enabled: 'false'
+- type_id: 'edma4_2.9.0'
+- functional_group: 'BOARD_InitPeripherals'
+- peripheral: 'DMA0'
+- config_sets:
+  - fsl_edma:
+    - common_settings:
+      - vars: []
+      - enableHaltOnError: 'true'
+      - enableDebugMode: 'true'
+      - enableRoundRobinArbitration: 'fixedPriority'
+      - enableGlobalChannelLink: 'true'
+      - enableMasterIdReplication: 'false'
+    - dma_table:
+      - 0: []
+    - edma_channels:
+      - 0:
+        - apiMode: 'trans'
+        - edma_channel:
+          - channel_prefix_id: 'CH0'
+          - uid: '1764102679188'
+          - eDMAn: '0'
+          - eDMA_source: 'kDma0RequestMuxAdc0FifoARequest'
+          - init_channel_priority: 'false'
+          - edma_channel_Preemption:
+            - enableChannelPreemption: 'false'
+            - enablePreemptAbility: 'false'
+            - channelPriority: '0'
+          - masterIdReplicationEnable: 'noInit'
+          - securityLevel: 'noInit'
+          - protectionLevel: 'noInit'
+          - enable_custom_name: 'false'
+        - resetChannel: 'true'
+        - enableChannelRequest: 'true'
+        - enableAsyncRequest: 'false'
+        - enableAutoStop: 'true'
+        - tcd_pool_enable: 'false'
+        - tcd_settings:
+          - tcd_size: '1'
+          - tcd_memory_ptr_id: 'default'
+        - transfer_config: []
+        - loopTransfer: 'false'
+        - no_init_uid: '1764102679340'
+        - init_callback: 'false'
+        - callback_function: 'DMA_Callback'
+        - callback_user_data: ''
+        - channel_enabled_interrupts: ''
+        - interrupt_channel:
+          - IRQn: 'EDMA_0_CH0_IRQn'
+          - enable_priority: 'false'
+          - priority: '0'
+ * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
+/* clang-format on */
+edma_config_t DMA0_config = {
+  .enableMasterIdReplication = false,
+  .enableGlobalChannelLink = true,
+  .enableHaltOnError = true,
+  .enableDebugMode = true,
+  .enableRoundRobinArbitration = false
+};
+edma_handle_t DMA0_CH0_Handle;
+
+static void DMA0_init(void) {
+
+  /* Channel CH0 initialization */
+  /* Set the kDma0RequestMuxAdc0FifoARequest request */
+  EDMA_SetChannelMux(DMA0_DMA_BASEADDR, DMA0_CH0_DMA_CHANNEL, DMA0_CH0_DMA_REQUEST);
+  /* Create the eDMA DMA0_CH0_Handle handle */
+  EDMA_CreateHandle(&DMA0_CH0_Handle, DMA0_DMA_BASEADDR, DMA0_CH0_DMA_CHANNEL);
+  /* DMA0 channel 0 reset */
+  EDMA_ResetChannel(DMA0_DMA_BASEADDR, DMA0_CH0_DMA_CHANNEL);
+  /* DMA0 hardware channel 0 request auto stop */
+  EDMA_EnableAutoStopRequest(DMA0_DMA_BASEADDR, DMA0_CH0_DMA_CHANNEL, true);
+  /* DMA0 channel 0 peripheral request */
+  EDMA_EnableChannelRequest(DMA0_DMA_BASEADDR, DMA0_CH0_DMA_CHANNEL);
+}
+
+/***********************************************************************************************************************
  * NVIC initialization code
  **********************************************************************************************************************/
 /* clang-format off */
@@ -546,73 +632,6 @@ static void DAC0_init(void) {
 }
 
 /***********************************************************************************************************************
- * CTIMER1 initialization code
- **********************************************************************************************************************/
-/* clang-format off */
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-instance:
-- name: 'CTIMER1'
-- type: 'ctimer'
-- mode: 'Capture_Match'
-- custom_name_enabled: 'false'
-- type_id: 'ctimer_2.2.2'
-- functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'CTIMER1'
-- config_sets:
-  - fsl_ctimer:
-    - ctimerConfig:
-      - mode: 'kCTIMER_TimerMode'
-      - clockSource: 'FunctionClock'
-      - clockSourceFreq: 'ClocksTool_DefaultInit'
-      - timerPrescaler: '15'
-    - EnableTimerInInit: 'false'
-    - matchChannels:
-      - 0:
-        - matchChannelPrefixId: 'Match_0'
-        - matchChannel: 'kCTIMER_Match_0'
-        - matchValueStr: '5 kHz'
-        - enableCounterReset: 'true'
-        - enableCounterStop: 'false'
-        - outControl: 'kCTIMER_Output_NoAction'
-        - outPinInitValue: 'low'
-        - enableInterrupt: 'true'
-    - captureChannels: []
-    - interruptCallbackConfig:
-      - interrupt:
-        - IRQn: 'CTIMER1_IRQn'
-        - enable_priority: 'true'
-        - priority: '2'
-      - callback: 'kCTIMER_SingleCallback'
-      - singleCallback: 'ctimer1_match0_callback'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-/* clang-format on */
-const ctimer_config_t CTIMER1_config = {
-  .mode = kCTIMER_TimerMode,
-  .input = kCTIMER_Capture_0,
-  .prescale = 14
-};
-const ctimer_match_config_t CTIMER1_Match_0_config = {
-  .matchValue = 1999,
-  .enableCounterReset = true,
-  .enableCounterStop = false,
-  .outControl = kCTIMER_Output_NoAction,
-  .outPinInitState = false,
-  .enableInterrupt = true
-};
-/* Single callback functions definition */
-ctimer_callback_t CTIMER1_callback[] = {ctimer1_match0_callback};
-
-static void CTIMER1_init(void) {
-  /* CTIMER1 peripheral initialization */
-  CTIMER_Init(CTIMER1_PERIPHERAL, &CTIMER1_config);
-  /* Interrupt vector CTIMER1_IRQn priority settings in the NVIC. */
-  NVIC_SetPriority(CTIMER1_TIMER_IRQN, CTIMER1_TIMER_IRQ_PRIORITY);
-  /* Match channel 0 of CTIMER1 peripheral initialization */
-  CTIMER_SetupMatch(CTIMER1_PERIPHERAL, CTIMER1_MATCH_0_CHANNEL, &CTIMER1_Match_0_config);
-  CTIMER_RegisterCallBack(CTIMER1_PERIPHERAL, CTIMER1_callback, kCTIMER_SingleCallback);
-}
-
-/***********************************************************************************************************************
  * DAC1 initialization code
  **********************************************************************************************************************/
 /* clang-format off */
@@ -729,14 +748,18 @@ static void POWERQUAD_init(void) {
  **********************************************************************************************************************/
 void BOARD_InitPeripherals(void)
 {
+  /* Global initialization */
+  (void)memset(DMA0_config.channelConfig, 0, FSL_FEATURE_EDMA_INSTANCE_CHANNELn(DMA0_DMA_BASEADDR) * sizeof(edma_channel_config_t *));
+  EDMA_Init(DMA0_DMA_BASEADDR, &DMA0_config);
+
   /* Initialize components */
+  DMA0_init();
   LP_FLEXCOMM4_init();
   ADC0_init();
   VREF0_init();
   GPIO0_init();
   CTIMER0_init();
   DAC0_init();
-  CTIMER1_init();
   DAC1_init();
   POWERQUAD_init();
 }

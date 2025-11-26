@@ -9,6 +9,8 @@
 /***********************************************************************************************************************
  * Included files
  **********************************************************************************************************************/
+#include "fsl_edma.h"
+#include "stdlib.h"
 #include "fsl_common.h"
 #include "fsl_lpuart.h"
 #include "fsl_clock.h"
@@ -28,6 +30,16 @@ extern "C" {
  * Definitions
  **********************************************************************************************************************/
 /* Definitions for BOARD_InitPeripherals functional group */
+/* Used DMA device. */
+#define DMA0_DMA_BASEADDR (EDMA_Type *)DMA0
+
+  /* Channel CH0 definitions */
+/* DMA0 eDMA source request. */
+#define DMA0_CH0_DMA_REQUEST kDma0RequestMuxAdc0FifoARequest
+/* Selected eDMA channel number. */
+#define DMA0_CH0_DMA_CHANNEL 0
+/* DMA0 interrupt vector ID (number). */
+#define DMA0_DMA_CH_INT_DONE_0_IRQN EDMA_0_CH0_IRQn
 /* Definition of peripheral ID */
 #define LP_FLEXCOMM4_PERIPHERAL ((LPUART_Type *) LP_FLEXCOMM4)
 /* Definition of the clock source frequency */
@@ -79,20 +91,6 @@ extern "C" {
 #define DAC0_IRQN DAC0_IRQn
 /* DAC0 interrupt handler identifier. */
 #define DAC0_IRQHANDLER DAC0_IRQHandler
-/* Definition of peripheral ID */
-#define CTIMER1_PERIPHERAL CTIMER1
-/* Timer tick frequency in Hz (input frequency of the timer) */
-#define CTIMER1_TICK_FREQ 10000000UL
-/* Timer tick period in ns (input period of the timer) */
-#define CTIMER1_TICK_PERIOD 100UL
-/* Definition of PWM period channel. */
-#define CTIMER1_PWM_PERIOD_CH kCTIMER_Match_0
-/* Definition of channel 0 ID */
-#define CTIMER1_MATCH_0_CHANNEL kCTIMER_Match_0
-/* CTIMER1 interrupt vector ID (number). */
-#define CTIMER1_TIMER_IRQN CTIMER1_IRQn
-/* CTIMER1 interrupt vector priority. */
-#define CTIMER1_TIMER_IRQ_PRIORITY 2
 /* BOARD_InitPeripherals defines for DAC1 */
 /* Definition of peripheral ID */
 #define DAC1_PERIPHERAL DAC1
@@ -106,6 +104,8 @@ extern "C" {
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
+extern edma_config_t DMA0_config;
+extern edma_handle_t DMA0_CH0_Handle;
 extern const lpuart_config_t LP_FLEXCOMM4_config;
 extern const lpadc_config_t ADC0_config;
 extern lpadc_conv_command_config_t ADC0_commandsConfig[1];
@@ -114,18 +114,9 @@ extern const ctimer_config_t CTIMER0_config;
 extern const ctimer_match_config_t CTIMER0_Match_3_config;
 /* LPDAC configuration */
 extern const dac_config_t DAC0_config;
-extern const ctimer_config_t CTIMER1_config;
-extern const ctimer_match_config_t CTIMER1_Match_0_config;
 /* LPDAC configuration */
 extern const dac_config_t DAC1_config;
 extern const pq_config_t POWERQUAD_config;
-
-/***********************************************************************************************************************
- * Callback functions
- **********************************************************************************************************************/
-  /* Single callback function declaration */
-extern void ctimer1_match0_callback(uint32_t flags);
-extern ctimer_callback_t CTIMER1_callback[];
 
 /***********************************************************************************************************************
  * Initialization functions
