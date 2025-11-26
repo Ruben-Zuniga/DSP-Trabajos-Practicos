@@ -60,15 +60,12 @@ static void LED_SetColor(bool RED, bool GREEN, bool BLUE);
  * Variables globales
  ******************************************************************************/
 bool filter_run = true; // prender/apagar filtro
-bool fir_done = false; // filtrado completado (buffer)
-bool process_half_A = false; // primera mitad llena (buffer)
-bool process_half_B = false; // segunda mitad llena (buffer)
+//bool process_half_A = false; // primera mitad llena (buffer)
+//bool process_half_B = false; // segunda mitad llena (buffer)
 
 uint8_t sample_rate_idx = 0; // indice para elegir frecuencia de muestreo
 
 uint16_t adc_buf_index = 0; // indice para recorrer el buffer circular de entrada
-uint16_t dac_buf_index = 0; // indice para recorrer el buffer circular de salida
-uint16_t out_buffer_uint[BUFFER_SIZE];
 uint16_t dac_val; // valor hacia el DAC
 
 arm_fir_instance_q15 fir[4][5];
@@ -79,6 +76,37 @@ const q15_t pasabajo_8k[32] = {
        55,   -464,   1055,  -1934,   3381,  -6439,  20576,  20576,  -6439,
      3381,  -1934,   1055,   -464,     55,    224,   -402,    500,   -534,
       519,   -470,    400,   -318,    236
+};
+const q15_t pasabajo_16k[42] = {
+     -133,    155,    236,   -122,   -356,     33,    475,    127,   -571,
+     -368,    613,    704,   -560,  -1156,    346,   1785,    175,  -2828,
+    -1575,   5892,  13512,  13512,   5892,  -1575,  -2828,    175,   1785,
+      346,  -1156,   -560,    704,    613,   -368,   -571,    127,    475,
+       33,   -356,   -122,    236,    155,   -133
+};
+const q15_t pasabajo_22k[58] = {
+     -126,      0,    157,    180,     13,   -206,   -250,    -34,    263,
+      340,     68,   -332,   -460,   -120,    420,    626,    202,   -540,
+     -876,   -338,    725,   1304,    600,  -1082,  -2263,  -1298,   2240,
+     6928,  10244,  10244,   6928,   2240,  -1298,  -2263,  -1082,    600,
+     1304,    725,   -338,   -876,   -540,    202,    626,    420,   -120,
+     -460,   -332,     68,    340,    263,    -34,   -250,   -206,     13,
+      180,    157,      0,   -126
+};
+const q15_t pasabajo_44k[114] = {
+      -52,    -20,     21,     61,     89,     95,     76,     33,    -23,
+      -78,   -118,   -130,   -107,    -53,     22,     98,    155,    175,
+      149,     80,    -17,   -120,   -200,   -233,   -206,   -120,      8,
+      146,    259,    313,    287,    179,     10,   -180,   -343,   -431,
+     -410,   -274,    -44,    229,    477,    628,    627,    449,    114,
+     -317,   -745,  -1053,  -1130,   -894,   -314,    579,   1691,   2879,
+     3976,   4818,   5275,   5275,   4818,   3976,   2879,   1691,    579,
+     -314,   -894,  -1130,  -1053,   -745,   -317,    114,    449,    627,
+      628,    477,    229,    -44,   -274,   -410,   -431,   -343,   -180,
+       10,    179,    287,    313,    259,    146,      8,   -120,   -206,
+     -233,   -200,   -120,    -17,     80,    149,    175,    155,     98,
+       22,    -53,   -107,   -130,   -118,    -78,    -23,     33,     76,
+       95,     89,     61,     21,    -20,    -52
 };
 // Pasabajo: fc = 3,3 kHz
 const q15_t pasabajo_48k[124] = {
@@ -98,15 +126,10 @@ const q15_t pasabajo_48k[124] = {
        78,     87,     77,     52,     18,    -17,    -44
 };
 
-SDK_ALIGN(q15_t fir_taps_q15[TAPS_SIZE], 8);
 SDK_ALIGN(q15_t state[INPUT_SIZE + TAPS_SIZE - 1], 8);
 
 SDK_ALIGN(q15_t adc_buffer[BUFFER_SIZE], 8);
 SDK_ALIGN(q15_t dac_buffer_q15[BUFFER_SIZE], 8);
-q15_t dac_val_q15;
-
-SDK_ALIGN(q15_t aux_adc_buffer[INPUT_SIZE], 8);
-SDK_ALIGN(q15_t aux_dac_buffer[INPUT_SIZE], 8);
 
 ctimer_match_config_t ctimerMatchConfig = {
   .matchValue = 749,
@@ -177,24 +200,9 @@ void ADC0_IRQHANDLER(void) {
 	    arm_fir_init_q15(&fir[0][0], TAPS_SIZE, pasabajo_48k, state, BUFFER_SIZE);
 	    arm_fir_q15(&fir[0][0], &adc_buffer[0], &dac_buffer_q15[0], BUFFER_SIZE);
 	}
-//	else{
-//		dac_val = adc_val >> 4;
-//	}
 
 //  Enviar al DAC
     DAC_SetData(DAC0, dac_val);
-
-//	if(fir_done){
-//
-//		DAC_SetData(DAC0, out_buffer_uint[dac_buf_index]);
-//		dac_buf_index = dac_buf_index + 1;
-//
-//		if(dac_buf_index >= BUFFER_SIZE){
-//			dac_buf_index = 0;
-//			fir_done = false;
-//		}
-//	}
-
 }
 
 // ---- ISR Botón SW2 (Run/Stop) ----
@@ -245,22 +253,6 @@ int main(void)
     BOARD_InitBootPeripherals();
     BOARD_InitDebugConsole();
 
-//    // Convierte los coeficientes del filtro a q15
-//    for (int i = 0; i < TAPS_SIZE; i++)
-//    {
-//    	fir_taps_q15[i] = pasabajo_8k[i];
-//    }
-
-//    static q15_t pState_lowpass_8k[BLOCK_SIZE + lowpass_8k_orden - 1];
-//    arm_fir_init_q15(&fir_instance[fs_8k][lp], lowpass_8k_orden, lowpass_8k, pState_lowpass_8k, BLOCK_SIZE);
-
-//    arm_fir_init_q15(&fir[0][0], TAPS_SIZE, pasabajo_8k, state, BUFFER_SIZE);
-
-    for (int i = 0; i < INPUT_SIZE; i++){
-    	aux_adc_buffer[i] = 0;
-    	aux_dac_buffer[i] = 0;
-	}
-
     PRINTF("Filtro FIR pasa bajos\r\n");
 
     UpdateLedColor(sample_rate_idx);
@@ -268,21 +260,6 @@ int main(void)
     CTIMER_StartTimer(CTIMER0);
 
     while (1) {
-        __NOP();
-
-////    	Filtrado
-//    	if(adc_buf_index >= BUFFER_SIZE - 1 && !fir_done){
-////    		PRINTF("filtering...\r\n");
-//    	    arm_fir_init_q15(&fir, TAPS_SIZE, fir_taps_q15, state, BUFFER_SIZE);
-//	        arm_fir_q15(&fir, adc_buffer, dac_buffer_q15, BUFFER_SIZE);
-//
-//			// Enviar al buffer de salida
-//			for(int i = 0; i < BUFFER_SIZE; i++){
-//				out_buffer_uint[i] = (uint16_t)(dac_buffer_q15[i] + 32768U) >> 4;
-////				PRINTF("%d\r\n", out_buffer_uint[i]);
-//			}
-//			fir_done = true;
-//		}
-
+        __WFI();
     }
 }
