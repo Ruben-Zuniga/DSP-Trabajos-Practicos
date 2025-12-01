@@ -9,8 +9,6 @@
 /***********************************************************************************************************************
  * Included files
  **********************************************************************************************************************/
-#include "fsl_edma.h"
-#include "stdlib.h"
 #include "fsl_common.h"
 #include "fsl_lpuart.h"
 #include "fsl_clock.h"
@@ -30,16 +28,6 @@ extern "C" {
  * Definitions
  **********************************************************************************************************************/
 /* Definitions for BOARD_InitPeripherals functional group */
-/* Used DMA device. */
-#define DMA0_DMA_BASEADDR (EDMA_Type *)DMA0
-
-  /* Channel CH0 definitions */
-/* DMA0 eDMA source request. */
-#define DMA0_CH0_DMA_REQUEST kDma0RequestMuxAdc0FifoARequest
-/* Selected eDMA channel number. */
-#define DMA0_CH0_DMA_CHANNEL 0
-/* DMA0 interrupt vector ID (number). */
-#define DMA0_DMA_CH_INT_DONE_0_IRQN EDMA_0_CH0_IRQn
 /* Definition of peripheral ID */
 #define LP_FLEXCOMM4_PERIPHERAL ((LPUART_Type *) LP_FLEXCOMM4)
 /* Definition of the clock source frequency */
@@ -104,8 +92,6 @@ extern "C" {
 /***********************************************************************************************************************
  * Global variables
  **********************************************************************************************************************/
-extern edma_config_t DMA0_config;
-extern edma_handle_t DMA0_CH0_Handle;
 extern const lpuart_config_t LP_FLEXCOMM4_config;
 extern const lpadc_config_t ADC0_config;
 extern lpadc_conv_command_config_t ADC0_commandsConfig[1];

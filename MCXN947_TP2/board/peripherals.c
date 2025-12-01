@@ -55,92 +55,6 @@ component:
  * BOARD_InitPeripherals functional group
  **********************************************************************************************************************/
 /***********************************************************************************************************************
- * DMA0 initialization code
- **********************************************************************************************************************/
-/* clang-format off */
-/* TEXT BELOW IS USED AS SETTING FOR TOOLS *************************************
-instance:
-- name: 'DMA0'
-- type: 'edma4'
-- mode: 'general'
-- custom_name_enabled: 'false'
-- type_id: 'edma4_2.9.0'
-- functional_group: 'BOARD_InitPeripherals'
-- peripheral: 'DMA0'
-- config_sets:
-  - fsl_edma:
-    - common_settings:
-      - vars: []
-      - enableHaltOnError: 'true'
-      - enableDebugMode: 'true'
-      - enableRoundRobinArbitration: 'fixedPriority'
-      - enableGlobalChannelLink: 'true'
-      - enableMasterIdReplication: 'false'
-    - dma_table:
-      - 0: []
-    - edma_channels:
-      - 0:
-        - apiMode: 'trans'
-        - edma_channel:
-          - channel_prefix_id: 'CH0'
-          - uid: '1764102679188'
-          - eDMAn: '0'
-          - eDMA_source: 'kDma0RequestMuxAdc0FifoARequest'
-          - init_channel_priority: 'false'
-          - edma_channel_Preemption:
-            - enableChannelPreemption: 'false'
-            - enablePreemptAbility: 'false'
-            - channelPriority: '0'
-          - masterIdReplicationEnable: 'noInit'
-          - securityLevel: 'noInit'
-          - protectionLevel: 'noInit'
-          - enable_custom_name: 'false'
-        - resetChannel: 'true'
-        - enableChannelRequest: 'true'
-        - enableAsyncRequest: 'false'
-        - enableAutoStop: 'true'
-        - tcd_pool_enable: 'false'
-        - tcd_settings:
-          - tcd_size: '1'
-          - tcd_memory_ptr_id: 'default'
-        - transfer_config: []
-        - loopTransfer: 'false'
-        - no_init_uid: '1764102679340'
-        - init_callback: 'false'
-        - callback_function: 'DMA_Callback'
-        - callback_user_data: ''
-        - channel_enabled_interrupts: ''
-        - interrupt_channel:
-          - IRQn: 'EDMA_0_CH0_IRQn'
-          - enable_priority: 'false'
-          - priority: '0'
- * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
-/* clang-format on */
-edma_config_t DMA0_config = {
-  .enableMasterIdReplication = false,
-  .enableGlobalChannelLink = true,
-  .enableHaltOnError = true,
-  .enableDebugMode = true,
-  .enableRoundRobinArbitration = false
-};
-edma_handle_t DMA0_CH0_Handle;
-
-static void DMA0_init(void) {
-
-  /* Channel CH0 initialization */
-  /* Set the kDma0RequestMuxAdc0FifoARequest request */
-  EDMA_SetChannelMux(DMA0_DMA_BASEADDR, DMA0_CH0_DMA_CHANNEL, DMA0_CH0_DMA_REQUEST);
-  /* Create the eDMA DMA0_CH0_Handle handle */
-  EDMA_CreateHandle(&DMA0_CH0_Handle, DMA0_DMA_BASEADDR, DMA0_CH0_DMA_CHANNEL);
-  /* DMA0 channel 0 reset */
-  EDMA_ResetChannel(DMA0_DMA_BASEADDR, DMA0_CH0_DMA_CHANNEL);
-  /* DMA0 hardware channel 0 request auto stop */
-  EDMA_EnableAutoStopRequest(DMA0_DMA_BASEADDR, DMA0_CH0_DMA_CHANNEL, true);
-  /* DMA0 channel 0 peripheral request */
-  EDMA_EnableChannelRequest(DMA0_DMA_BASEADDR, DMA0_CH0_DMA_CHANNEL);
-}
-
-/***********************************************************************************************************************
  * NVIC initialization code
  **********************************************************************************************************************/
 /* clang-format off */
@@ -159,7 +73,6 @@ instance:
       - 0: []
       - 1: []
       - 2: []
-      - 3: []
     - interrupts: []
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -719,9 +632,9 @@ instance:
       - inputBPrescale: '0'
       - outputFormat: 'kPQ_16Bit'
       - outputPrescale: '0'
-      - tmpFormat: 'kPQ_Float'
+      - tmpFormat: 'kPQ_16Bit'
       - tmpPrescale: '0'
-      - machineFormat: 'kPQ_Float'
+      - machineFormat: 'kPQ_16Bit'
       - tmpBaseValue: '0xE0000000UL'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -732,9 +645,9 @@ const pq_config_t POWERQUAD_config = {
   .inputBPrescale = 0,
   .outputFormat = kPQ_16Bit,
   .outputPrescale = 0,
-  .tmpFormat = kPQ_Float,
+  .tmpFormat = kPQ_16Bit,
   .tmpPrescale = 0,
-  .machineFormat = kPQ_Float,
+  .machineFormat = kPQ_16Bit,
   .tmpBase = (uint32_t *)0xE0000000UL
 };
 
@@ -748,12 +661,7 @@ static void POWERQUAD_init(void) {
  **********************************************************************************************************************/
 void BOARD_InitPeripherals(void)
 {
-  /* Global initialization */
-  (void)memset(DMA0_config.channelConfig, 0, FSL_FEATURE_EDMA_INSTANCE_CHANNELn(DMA0_DMA_BASEADDR) * sizeof(edma_channel_config_t *));
-  EDMA_Init(DMA0_DMA_BASEADDR, &DMA0_config);
-
   /* Initialize components */
-  DMA0_init();
   LP_FLEXCOMM4_init();
   ADC0_init();
   VREF0_init();

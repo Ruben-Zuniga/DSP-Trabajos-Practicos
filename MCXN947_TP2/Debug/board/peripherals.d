@@ -1,6 +1,5 @@
 board/peripherals.o board/peripherals.d: ../board/peripherals.c \
- ../board/peripherals.h C:\workspace\MCXN947_TP2\drivers/fsl_edma.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_common.h \
+ ../board/peripherals.h C:\workspace\MCXN947_TP2\drivers/fsl_common.h \
  C:\workspace\MCXN947_TP2\device/fsl_device_registers.h \
  C:\workspace\MCXN947_TP2\device/MCXN947_cm33_core0.h \
  C:\workspace\MCXN947_TP2\device\periph/PERI_ADC.h \
@@ -91,10 +90,8 @@ board/peripherals.o board/peripherals.d: ../board/peripherals.c \
  C:\workspace\MCXN947_TP2\device\periph/PERI_WWDT.h \
  C:\workspace\MCXN947_TP2\drivers/fsl_common_arm.h \
  C:\workspace\MCXN947_TP2\drivers/fsl_clock.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_reset.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_edma_core.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_edma_soc.h \
  C:\workspace\MCXN947_TP2\drivers/fsl_common.h \
+ C:\workspace\MCXN947_TP2\drivers/fsl_reset.h \
  C:\workspace\MCXN947_TP2\drivers/fsl_lpuart.h \
  C:\workspace\MCXN947_TP2\drivers/fsl_lpflexcomm.h \
  C:\workspace\MCXN947_TP2\drivers/fsl_clock.h \
@@ -107,7 +104,6 @@ board/peripherals.o board/peripherals.d: ../board/peripherals.c \
  C:\workspace\MCXN947_TP2\drivers/fsl_powerquad.h \
  C:\workspace\MCXN947_TP2\drivers/fsl_powerquad_data.h
 ../board/peripherals.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_edma.h:
 C:\workspace\MCXN947_TP2\drivers/fsl_common.h:
 C:\workspace\MCXN947_TP2\device/fsl_device_registers.h:
 C:\workspace\MCXN947_TP2\device/MCXN947_cm33_core0.h:
@@ -199,10 +195,8 @@ C:\workspace\MCXN947_TP2\device\periph/PERI_WUU.h:
 C:\workspace\MCXN947_TP2\device\periph/PERI_WWDT.h:
 C:\workspace\MCXN947_TP2\drivers/fsl_common_arm.h:
 C:\workspace\MCXN947_TP2\drivers/fsl_clock.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_reset.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_edma_core.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_edma_soc.h:
 C:\workspace\MCXN947_TP2\drivers/fsl_common.h:
+C:\workspace\MCXN947_TP2\drivers/fsl_reset.h:
 C:\workspace\MCXN947_TP2\drivers/fsl_lpuart.h:
 C:\workspace\MCXN947_TP2\drivers/fsl_lpflexcomm.h:
 C:\workspace\MCXN947_TP2\drivers/fsl_clock.h:
