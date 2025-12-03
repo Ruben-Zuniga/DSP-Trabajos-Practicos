@@ -1,0 +1,11 @@
+../utilities/debug_console/fsl_debug_console.c:425:10:DbgConsole_ReadOneCharacter	24	static
+../utilities/debug_console/fsl_debug_console.c:497:5:DbgConsole_SendData	24	static
+../utilities/debug_console/fsl_debug_console.c:550:5:DbgConsole_SendDataReliable	24	static
+../utilities/debug_console/fsl_debug_console.c:631:5:DbgConsole_ReadLine	24	static
+../utilities/debug_console/fsl_debug_console.c:697:5:DbgConsole_ReadCharacter	24	static
+../utilities/debug_console/fsl_debug_console.c:774:10:DbgConsole_Init	56	static
+../utilities/debug_console/fsl_debug_console.c:945:10:DbgConsole_EnterLowpower	16	static
+../utilities/debug_console/fsl_debug_console.c:956:10:DbgConsole_ExitLowpower	16	static
+../utilities/debug_console/fsl_debug_console.c:967:10:DbgConsole_Deinit	8	static
+C:/Nxp/MCUXpressoIDE_25.6.136/ide/plugins/com.nxp.mcuxpresso.tools.win32_25.6.0.202501151204/tools/redlib/include/sys/libconfig-arm.h:247:5:__sys_write	24	static
+C:/Nxp/MCUXpressoIDE_25.6.136/ide/plugins/com.nxp.mcuxpresso.tools.win32_25.6.0.202501151204/tools/redlib/include/sys/libconfig-arm.h:241:5:__sys_readc	16	static
