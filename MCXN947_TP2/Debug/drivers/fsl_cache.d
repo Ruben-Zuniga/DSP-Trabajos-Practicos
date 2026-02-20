@@ -1,7 +1,5 @@
-source/MCXN947_TP2.o source/MCXN947_TP2.d: ../source/MCXN947_TP2.c \
- C:\workspace\MCXN947_TP2\board/board.h \
- C:\workspace\MCXN947_TP2\board/clock_config.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_common.h \
+drivers/fsl_cache.o drivers/fsl_cache.d: ../drivers/fsl_cache.c \
+ ../drivers/fsl_cache.h ../drivers/fsl_common.h \
  C:\workspace\MCXN947_TP2\device/fsl_device_registers.h \
  C:\workspace\MCXN947_TP2\device/MCXN947_cm33_core0.h \
  C:\workspace\MCXN947_TP2\device\periph/PERI_ADC.h \
@@ -90,74 +88,10 @@ source/MCXN947_TP2.o source/MCXN947_TP2.d: ../source/MCXN947_TP2.c \
  C:\workspace\MCXN947_TP2\device\periph/PERI_VREF.h \
  C:\workspace\MCXN947_TP2\device\periph/PERI_WUU.h \
  C:\workspace\MCXN947_TP2\device\periph/PERI_WWDT.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_common_arm.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_clock.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_common.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_reset.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_gpio.h \
- C:\workspace\MCXN947_TP2\board/peripherals.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_lpuart.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_lpflexcomm.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_clock.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_lpadc.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_spc.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_vref.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_ctimer.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_dac.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_powerquad.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_powerquad_data.h \
- C:\workspace\MCXN947_TP2\board/pin_mux.h \
- C:\workspace\MCXN947_TP2\board/clock_config.h \
- C:\workspace\MCXN947_TP2\utilities\debug_console/fsl_debug_console.h \
- C:\workspace\MCXN947_TP2\component\serial_manager/fsl_component_serial_manager.h \
- C:\workspace\MCXN947_TP2\component\serial_manager/fsl_component_serial_port_uart.h \
- C:\workspace\MCXN947_TP2\component\uart/fsl_adapter_uart.h \
- C:\workspace\MCXN947_TP2\drivers/fsl_cache.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types.h \
- C:\workspace\MCXN947_TP2\CMSIS/cmsis_compiler.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_memory.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/none.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/utils.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/basic_math_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_memory.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/none.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/utils.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/interpolation_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/bayes_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/statistics_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/basic_math_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/fast_math_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/matrix_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/complex_math_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/statistics_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/controller_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/support_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/distance_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/matrix_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/svm_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/svm_defines.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/fast_math_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/transform_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/complex_math_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/filtering_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/support_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/quaternion_math_functions.h \
- C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/window_functions.h \
- ../source/Coeficientes_PB_8k.h ../source/Coeficientes_PB_16k.h \
- ../source/Coeficientes_PB_22k.h ../source/Coeficientes_PB_44k.h \
- ../source/Coeficientes_PB_48k.h ../source/Coeficientes_PA_8k.h \
- ../source/Coeficientes_PA_16k.h ../source/Coeficientes_PA_22k.h \
- ../source/Coeficientes_PA_44k.h ../source/Coeficientes_PA_48k.h \
- ../source/Coeficientes_PBDA_8k.h ../source/Coeficientes_PBDA_16k.h \
- ../source/Coeficientes_PBDA_22k.h ../source/Coeficientes_PBDA_44k.h \
- ../source/Coeficientes_PBDA_48k.h ../source/Coeficientes_RBDA2_8k.h \
- ../source/Coeficientes_RBDA2_16k.h ../source/Coeficientes_RBDA2_22k.h \
- ../source/Coeficientes_RBDA2_44k.h ../source/Coeficientes_RBDA2_48k.h
-C:\workspace\MCXN947_TP2\board/board.h:
-C:\workspace\MCXN947_TP2\board/clock_config.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_common.h:
+ ../drivers/fsl_common_arm.h ../drivers/fsl_clock.h \
+ ../drivers/fsl_reset.h
+../drivers/fsl_cache.h:
+../drivers/fsl_common.h:
 C:\workspace\MCXN947_TP2\device/fsl_device_registers.h:
 C:\workspace\MCXN947_TP2\device/MCXN947_cm33_core0.h:
 C:\workspace\MCXN947_TP2\device\periph/PERI_ADC.h:
@@ -246,78 +180,6 @@ C:\workspace\MCXN947_TP2\device\periph/PERI_VBAT.h:
 C:\workspace\MCXN947_TP2\device\periph/PERI_VREF.h:
 C:\workspace\MCXN947_TP2\device\periph/PERI_WUU.h:
 C:\workspace\MCXN947_TP2\device\periph/PERI_WWDT.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_common_arm.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_clock.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_common.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_reset.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_gpio.h:
-C:\workspace\MCXN947_TP2\board/peripherals.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_lpuart.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_lpflexcomm.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_clock.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_lpadc.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_spc.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_vref.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_ctimer.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_dac.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_powerquad.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_powerquad_data.h:
-C:\workspace\MCXN947_TP2\board/pin_mux.h:
-C:\workspace\MCXN947_TP2\board/clock_config.h:
-C:\workspace\MCXN947_TP2\utilities\debug_console/fsl_debug_console.h:
-C:\workspace\MCXN947_TP2\component\serial_manager/fsl_component_serial_manager.h:
-C:\workspace\MCXN947_TP2\component\serial_manager/fsl_component_serial_port_uart.h:
-C:\workspace\MCXN947_TP2\component\uart/fsl_adapter_uart.h:
-C:\workspace\MCXN947_TP2\drivers/fsl_cache.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types.h:
-C:\workspace\MCXN947_TP2\CMSIS/cmsis_compiler.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_memory.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/none.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_types.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/utils.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/basic_math_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/arm_math_memory.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/none.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/utils.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/interpolation_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/bayes_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/statistics_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/basic_math_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/fast_math_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/matrix_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/complex_math_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/statistics_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/controller_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/support_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/distance_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/matrix_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/svm_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/svm_defines.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/fast_math_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/transform_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/complex_math_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/filtering_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/support_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/quaternion_math_functions.h:
-C:\workspace\MCXN947_TP2\CMSIS\DSP\Include/dsp/window_functions.h:
-../source/Coeficientes_PB_8k.h:
-../source/Coeficientes_PB_16k.h:
-../source/Coeficientes_PB_22k.h:
-../source/Coeficientes_PB_44k.h:
-../source/Coeficientes_PB_48k.h:
-../source/Coeficientes_PA_8k.h:
-../source/Coeficientes_PA_16k.h:
-../source/Coeficientes_PA_22k.h:
-../source/Coeficientes_PA_44k.h:
-../source/Coeficientes_PA_48k.h:
-../source/Coeficientes_PBDA_8k.h:
-../source/Coeficientes_PBDA_16k.h:
-../source/Coeficientes_PBDA_22k.h:
-../source/Coeficientes_PBDA_44k.h:
-../source/Coeficientes_PBDA_48k.h:
-../source/Coeficientes_RBDA2_8k.h:
-../source/Coeficientes_RBDA2_16k.h:
-../source/Coeficientes_RBDA2_22k.h:
-../source/Coeficientes_RBDA2_44k.h:
-../source/Coeficientes_RBDA2_48k.h:
+../drivers/fsl_common_arm.h:
+../drivers/fsl_clock.h:
+../drivers/fsl_reset.h:

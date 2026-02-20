@@ -442,7 +442,7 @@ instance:
       - 0:
         - matchChannelPrefixId: 'Match_3'
         - matchChannel: 'kCTIMER_Match_3'
-        - matchValueStr: '16Khz'
+        - matchValueStr: '16khz'
         - enableCounterReset: 'true'
         - enableCounterStop: 'false'
         - outControl: 'kCTIMER_Output_Toggle'
@@ -630,11 +630,11 @@ instance:
       - inputAPrescale: '0'
       - inputBFormat: 'kPQ_16Bit'
       - inputBPrescale: '0'
-      - outputFormat: 'kPQ_16Bit'
+      - outputFormat: 'kPQ_Float'
       - outputPrescale: '0'
-      - tmpFormat: 'kPQ_16Bit'
+      - tmpFormat: 'kPQ_Float'
       - tmpPrescale: '0'
-      - machineFormat: 'kPQ_16Bit'
+      - machineFormat: 'kPQ_Float'
       - tmpBaseValue: '0xE0000000UL'
  * BE CAREFUL MODIFYING THIS COMMENT - IT IS YAML SETTINGS FOR TOOLS **********/
 /* clang-format on */
@@ -643,11 +643,11 @@ const pq_config_t POWERQUAD_config = {
   .inputAPrescale = 0,
   .inputBFormat = kPQ_16Bit,
   .inputBPrescale = 0,
-  .outputFormat = kPQ_16Bit,
+  .outputFormat = kPQ_Float,
   .outputPrescale = 0,
-  .tmpFormat = kPQ_16Bit,
+  .tmpFormat = kPQ_Float,
   .tmpPrescale = 0,
-  .machineFormat = kPQ_16Bit,
+  .machineFormat = kPQ_Float,
   .tmpBase = (uint32_t *)0xE0000000UL
 };
 

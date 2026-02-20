@@ -1290,7 +1290,7 @@
                            <struct name="0">
                               <setting name="matchChannelPrefixId" value="Match_3"/>
                               <setting name="matchChannel" value="kCTIMER_Match_3"/>
-                              <setting name="matchValueStr" value="16Khz"/>
+                              <setting name="matchValueStr" value="16khz"/>
                               <setting name="enableCounterReset" value="true"/>
                               <setting name="enableCounterStop" value="false"/>
                               <setting name="outControl" value="kCTIMER_Output_Toggle"/>
@@ -1493,11 +1493,11 @@
                            <setting name="inputAPrescale" value="0"/>
                            <setting name="inputBFormat" value="kPQ_16Bit"/>
                            <setting name="inputBPrescale" value="0"/>
-                           <setting name="outputFormat" value="kPQ_16Bit"/>
+                           <setting name="outputFormat" value="kPQ_Float"/>
                            <setting name="outputPrescale" value="0"/>
-                           <setting name="tmpFormat" value="kPQ_16Bit"/>
+                           <setting name="tmpFormat" value="kPQ_Float"/>
                            <setting name="tmpPrescale" value="0"/>
-                           <setting name="machineFormat" value="kPQ_16Bit"/>
+                           <setting name="machineFormat" value="kPQ_Float"/>
                            <setting name="tmpBaseValue" value="0xE0000000UL"/>
                         </struct>
                      </config_set>
